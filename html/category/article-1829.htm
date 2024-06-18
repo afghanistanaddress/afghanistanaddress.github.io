@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1829.htm" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>大数据之hive Serde序列化/反序列化性能对比 - Afghanistan Address</title>
+        <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/maicons.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/css/owl.carousel.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/theme.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?07d6804a416dbd216ab0e3d3e283ddad";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Back to top button -->
+    <div class="back-to-top"></div>
+    <header>
+                <nav class="navbar navbar-expand-lg navbar-light navbar-float">
+            <div class="container">
+                                <a href="/" class="navbar-brand">Afghanistan Address</a>
+                                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarContent">
+                    <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
+                                                <li class="nav-item">
+                            <a href="/" class="nav-link">首页</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="/html/category/" class="nav-link">文章分类</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="#" class="nav-link">关于</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">联系</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container mt-5">
+            <div class="page-banner">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-md-10">
+                        <h1 class="text-center">大数据之hive Serde序列化/反序列化性能对比</h1>
+                        <nav aria-label="Breadcrumb">
+                            <ul class="breadcrumb justify-content-center py-0 bg-transparent">
+                                <li class="breadcrumb-item"><a href="/">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/html/category/">文章分类</a></li>
+                                <li class="breadcrumb-item active">正文</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="page-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                          				  				  				<div id="content_views" class="htmledit_views"> <p>java 中我们使用序列化和反序列化主要目的是将对象和字节序列进行相互转换。序列化的作用是什么呢？1，将对象转换成字节序列后进行落盘存储到文件 2，将对象序列化后进行网络传输。然而对于hive 的序列化和反序列化是将hive 表中每一列的值与字节码序列进行转换。hive Serde 包含Serialize和Deserialize 两个功能，比如查询select * from tb_example, Deserialize 是将存储在hdfs中的字节码解析出来成为可读；load 加载数据时，Serialize 是将数据序列化后存储到hdfs 系统中。</p> <p>针对量级比较大的数据，hive 官方支持几种数据压缩格式对数据进行压缩保存，然而不同的数据格式的压缩效率和查询效率等性能却有所差异。以下面的例子对比下(日志文件3.6G,约3700w数据)hive表以不同的数据格式存储的性能表现。</p> <p><img decoding="async" alt="大数据之hive Serde序列化/反序列化性能对比（一）" class="has" src="http://img.555519.xyz/uploads3/20220902/1100ebb78bc9c8e9d1437e1566e0eaa3.jpg"></p> <p>不同数据格式的压缩比（图片来自网络）</p> <ol> <li>创建普通的hive表 tb_iptv_data 作为基础数据表，将数据load 到表中</li> </ol> <pre class="has"><code>hive 默认是使用 org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe create table if not exists tb_iptv_data(expodate string,addcode string,sbtid string,rscode string,rsname string,scid string)row format DELIMITED FIELDS TERMINATED BY '|'LINES TERMINATED BY '\n';//再创建一张sequencefile 格式的表create table if not exists tb_iptv_data_sequence(expodate string,addcode string,sbtid string,rscode string,rsname string,scid string)row format DELIMITED FIELDS TERMINATED BY '|'LINES TERMINATED BY '\n' stored as sequencefile as select * from tb_iptv_data;//用时Stage-Stage-1: Map: 15   Cumulative CPU: 306.47 sec   HDFS Read: 3868909814 HDFS Write: 4310770586 SUCCESSTotal MapReduce CPU Time Spent: 5 minutes 6 seconds 470 msecOKTime taken:  seconds</code></pre> <ol> <li>依据基础数据表创建其他数据格式的表,分别是 orcfile/rcfile/avro/parquetfile，数据表建好后通过执行sql对比其执行效率（集群硬件基础是24c32G）</li> </ol> <pre class="has"><code>SELECT count(*) from (SELECT rscode,sbtid,count(*) FROM tb_iptv_data GROUP BY rscode,sbtid)t</code></pre> <pre class="has"><code>org.apache.hadoop.hive.ql.io.orc.OrcSerde 格式create table if not exists tb_iptv_data_orc(expodate string,addcode string,sbtid string,rscode string,rsname string,scid string)row format DELIMITED FIELDS TERMINATED BY '|'LINES TERMINATED BY '\n' stored as orc;</code></pre> <pre class="has"><code>org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe 格式create table if not exists tb_iptv_data_rc(expodate string,addcode string,sbtid string,rscode string,rsname string,scid string)row format DELIMITED FIELDS TERMINATED BY '|'LINES TERMINATED BY '\n' stored as rcfile as select * from tb_iptv_data;//建表耗时Stage-Stage-1: Map: 15   Cumulative CPU: 255.19 sec   HDFS Read: 3868912709 HDFS Write: 3662099227 SUCCESSTotal MapReduce CPU Time Spent: 4 minutes 15 seconds 190 msecOKTime taken: 300.767 seconds//sql 执行耗时6711120Time taken: 199.498 seconds, Fetched: 1 row(s)</code></pre> <pre class="has"><code>org.apache.hadoop.hive.serde2.avro.AvroSerDe 格式create table if not exists tb_iptv_data_avro(expodate string,addcode string,sbtid string,rscode string,rsname string,scid string)row format DELIMITED FIELDS TERMINATED BY '|'LINES TERMINATED BY '\n' stored as avro as select * from tb_iptv_data;//建表耗时Stage-Stage-1: Map: 15   Cumulative CPU: 550.79 sec   HDFS Read: 3868919834 HDFS Write: 4086779757 SUCCESSTotal MapReduce CPU Time Spent: 9 minutes 10 seconds 790 msecOKTime taken: 356.338 seconds//sql 执行耗时6711120Time taken: 268.299 seconds, Fetched: 1 row(s)</code></pre> <pre class="has"><code>org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe 格式create table if not exists tb_iptv_data_parquet(expodate string,addcode string,sbtid string,rscode string,rsname string,scid string)row format DELIMITED FIELDS TERMINATED BY '|'LINES TERMINATED BY '\n' stored as avro;TERMINATED BY '|'LINES TERMINATED BY '\n' stored as parquetfile;</code></pre> <pre class="has"><code>org.apache.hive.hcatalog.data.JsonSerDe 格式create table if not exists tb_iptv_data_json(expodate string,addcode string,sbtid string,rscode string,rsname string,scid string)row format Serde "org.apache.hive.hcatalog.data.JsonSerDe";</code></pre> <p><img decoding="async" alt="大数据之hive Serde序列化/反序列化性能对比（一）" class="has" src="http://img.555519.xyz/uploads3/20220902/c3308b9138a3052b8646aae0df3d9338.jpg"></p> <p><img decoding="async" alt="大数据之hive Serde序列化/反序列化性能对比（一）" class="has" src="http://img.555519.xyz/uploads3/20220902/947687c93fb85776754454db4f73405d.jpg"></p> <p>各表的数据大小</p> <ol> <li>总结</li> </ol> <ul> <li>数据存储时的压缩耗时 以orc 格式效率最高，其次是qarquet,而 squence/rcfile/avro 的效率较慢</li> <li>数据压缩后大小，以orcfile 格式的压缩比最优，parquet 次之</li> <li>sql 查询性能的对比可以看出，parquet 性能最优,其次是rcfile格式（<strong>此处的对比结果与网上其他文章中的结论不符合，同时也与orc 官网介绍的结论不一样是什么情况？这个问题研究中</strong>）</li> </ul> </div> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-1828.htm">SpringBoot 如何进行参数校验</a></p>
+                                                        <p>下一个：<a href="/html/category/article-1830.htm">关于Element-UI的穿梭框数据量大时，点击‘全选’卡顿问题解决</a></p>
+                                                    </div>
+                                            </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/html/category/article-1907.htm" title="为MySQL创建高性能索引_Mysql_">为MySQL创建高性能索引_Mysql_</a></li>
+                        <li class="py-2"><a href="/html/category/article-1884.htm" title="Springboot：拦截器和过滤器">Springboot：拦截器和过滤器</a></li>
+                        <li class="py-2"><a href="/html/category/article-1859.htm" title="【Azure Developer】使用 adal4j(Azure Active Directory authentication library for Java)如何来获取Token呢 (通过用户名和密码方式获取Access Token)_在线工具">【Azure Developer】使用 adal4j(Azure Active Directory authentication library for Java)如何来获取Token呢 (通过用户名和密码方式获取Access Token)_在线工具</a></li>
+                        <li class="py-2"><a href="/html/category/article-1903.htm" title="基于JDK的动态代理原理分析">基于JDK的动态代理原理分析</a></li>
+                        <li class="py-2"><a href="/html/category/article-1905.htm" title="python中time.strftime不支持中文，报错UnicodeEncodeError: &#8216;locale&#8217; codec can&#8217;t encode character &#8216;\u5e74&#8217; in po&#8230;">python中time.strftime不支持中文，报错UnicodeEncodeError: &#8216;locale&#8217; codec can&#8217;t encode character &#8216;\u5e74&#8217; in po&#8230;</a></li>
+                        <li class="py-2"><a href="/html/category/article-1886.htm" title="TensorFlow运行出错：UnicodeEncodeError: &#8216;utf-8&#8217; codec can&#8217;t encode character &#8216;\udcce&#8217; in position 2559: s">TensorFlow运行出错：UnicodeEncodeError: &#8216;utf-8&#8217; codec can&#8217;t encode character &#8216;\udcce&#8217; in position 2559: s</a></li>
+                        <li class="py-2"><a href="/html/category/article-1883.htm" title="C#实现文件Move和Copy操作_C#教程_">C#实现文件Move和Copy操作_C#教程_</a></li>
+                        <li class="py-2"><a href="/html/category/article-1881.htm" title="【Azure 应用服务】Azure Function 启用 Managed Identity后， Powershell Funciton出现 ERROR: ManagedIdentityCredential authentication failed">【Azure 应用服务】Azure Function 启用 Managed Identity后， Powershell Funciton出现 ERROR: ManagedIdentityCredential authentication failed</a></li>
+                        <li class="py-2"><a href="/html/category/article-1902.htm" title="树的同构（java实现）">树的同构（java实现）</a></li>
+                        <li class="py-2"><a href="/html/category/article-1898.htm" title="Kotlin 标准函数和静态方法[第一行代码 Kotlin 学习笔记]">Kotlin 标准函数和静态方法[第一行代码 Kotlin 学习笔记]</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">36</span> <a href="/html/date/2024-06/" title="2024-06 归档">2024-06</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-05/" title="2024-05 归档">2024-05</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">60</span> <a href="/html/date/2024-04/" title="2024-04 归档">2024-04</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-03/" title="2024-03 归档">2024-03</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">50</span> <a href="/html/date/2024-02/" title="2024-02 归档">2024-02</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+
+
+                    </div>
+                </div>
+            </div> <!-- .container -->
+        </div> <!-- .page-section -->
+    </main>
+        <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 py-2">
+                    <p id="copyright">
+                        Afghanistan Address 版权所有 Powered by WordPress
+                    </p>
+                </div>
+                <div class="col-sm-6 py-2 text-right">
+                    <div class="d-inline-block px-3">
+                        <a href="#">Privacy</a>
+                    </div>
+                    <div class="d-inline-block px-3">
+                        <a href="#">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .container -->
+    </footer> <!-- .page-footer -->
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/jquery-3.5.1.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/bootstrap.bundle.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/wow/wow.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/js/owl.carousel.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/waypoints/jquery.waypoints.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/animateNumber/jquery.animateNumber.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/google-maps.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/theme.js"></script>
+    <script>
+    $(function() {
+        $('.js_to').click(function(){
+            var url = $(this).data('url');
+            var code = $(this).data('code');
+            url += code;
+
+            window.open(url);
+        })
+    });
+    </script>
+</body>
+
+</html>

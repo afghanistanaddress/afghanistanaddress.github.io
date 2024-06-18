@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1724.htm" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>vue组件间（父子、兄弟、跨级组件）的传值 - Afghanistan Address</title>
+        <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/maicons.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/css/owl.carousel.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/theme.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?07d6804a416dbd216ab0e3d3e283ddad";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Back to top button -->
+    <div class="back-to-top"></div>
+    <header>
+                <nav class="navbar navbar-expand-lg navbar-light navbar-float">
+            <div class="container">
+                                <a href="/" class="navbar-brand">Afghanistan Address</a>
+                                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarContent">
+                    <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
+                                                <li class="nav-item">
+                            <a href="/" class="nav-link">首页</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="/html/category/" class="nav-link">文章分类</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="#" class="nav-link">关于</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">联系</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container mt-5">
+            <div class="page-banner">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-md-10">
+                        <h1 class="text-center">vue组件间（父子、兄弟、跨级组件）的传值</h1>
+                        <nav aria-label="Breadcrumb">
+                            <ul class="breadcrumb justify-content-center py-0 bg-transparent">
+                                <li class="breadcrumb-item"><a href="/">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/html/category/">文章分类</a></li>
+                                <li class="breadcrumb-item active">正文</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="page-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                          				  				  				<div id="content_views" class="markdown_views prism-atom-one-light"> <p>大体可以分为这几种情况：</p> <ul> <li>父子组件传值</li> <li>子父组件传值</li> <li>兄弟组件传值（不相干的两个组件）</li> <li>跨组件传值</li> </ul> <h2><a id="_6" rel="nofollow"></a>父组件给子组件传值</h2> <h3><a id="_7" rel="nofollow"></a>静态传值</h3> <p>父组件内：</p> <pre><code>&lt;form-test title="element表单"&gt;&lt;/form-test&gt;</code></pre> <p>子组件使用props获取：</p> <pre><code>props:['title'],</code></pre> <p>子组件渲染在页面内：</p> <pre><code>&lt;h3&gt;{<!-- -->{title}}&lt;/h3&gt;</code></pre> <p>最后渲染效果：<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220601/df15fab197a197b309ca7951bf34d859.jpg" alt="vue组件间（父子、兄弟、跨级组件）的传值"></p> <h3><a id="_23" rel="nofollow"></a>动态传值</h3> <p>子组件内的东西与上方的一致，修改父组件内的组件：</p> <pre><code>&lt;form-test :title="titleVar"&gt;&lt;/form-test&gt;</code></pre> <p>获取方式一致，在data内声明<code>titleVar: 'element表单'</code>，也可达到传值目的。</p> <h2><a id="_30" rel="nofollow"></a>传值校验</h2> <p>如果你在传值的时候，需要父组件一定给你传递过来值，可以在子组件的props内对传递进来的值进行判断。<br /> 将</p> <pre><code>props:['title'],</code></pre> <p>改为：</p> <pre><code>props:{             title: { type: String, required: true}         },</code></pre> <p>当父组件不传值时，会报错：<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220601/2b87851b2eac88439b435081204a3480.jpg" alt="vue组件间（父子、兄弟、跨级组件）的传值"></p> <h2><a id="_44" rel="nofollow"></a>子组件给父组件传值</h2> <p>子组件给父组件是通过事件传值的，派发自定义事件，父组件监听这个自定义事件。<br /> 在子组件内需要使用<code>$emit</code>触发事件<code>test</code>，将后面的参数<br /> 传递给父组件。<br /> 子组件<code>Button.vue</code>的内容：</p> <pre><code>&lt;template&gt;     &lt;div&gt;         &lt;button @click="handleClick"&gt;测试&lt;/button&gt;     &lt;/div&gt; &lt;/template&gt; &lt;script&gt;     export default {         methods: {             handleClick() {                 this.$emit('test',{msg: 'hello'})             }         },     } &lt;/script&gt;  &lt;style lang="scss" scoped&gt;  &lt;/style&gt;</code></pre> <p>父组件内容<br /> 父组件需要导入子组件<code>Button.vue</code>，添加下方内容：</p> <pre><code>import TButton from './components/Button.vue' export default{ 	components: { 		TButton 	} }</code></pre> <p>父组件监听传递过来的事件<code>test</code>，使用事件<code>handleClick</code>来获取，<code>obj</code>就是传递出来的那个对象。<br /> 最后，父组件的内容：</p> <pre><code>&lt;template&gt;   &lt;div id="app"&gt;     &lt;t-button @test="handleClick"&gt;&lt;/t-button&gt;   &lt;/div&gt; &lt;/template&gt;  &lt;script&gt; import TButton from './components/Button.vue' export default {   components: {     TButton   },   methods: {     handleClick(obj){       console.log(obj);     }   }, } &lt;/script&gt;  &lt;style&gt;  &lt;/style&gt;</code></pre> <p>最后的结果是：<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220601/f7f7614d1efbe9b0777c02f243df6c09.jpg" alt="vue组件间（父子、兄弟、跨级组件）的传值"></p> <h2><a id="_108" rel="nofollow"></a>非父子组件传值</h2> <h3><a id="1bus_109" rel="nofollow"></a>1.总线bus</h3> <p>创建派发消息的Vue实例：</p> <pre><code>Vue.prototype.$bus=  new Vue();</code></pre> <p>父组件内：<br /> 在相应发生事件位置，添加点击事件<code>addGood()</code>事件，</p> <pre><code>methods: {     addGood() {       this.$bus.$emit('addCart', good);  //第一个参数为事件名称，第二个参为需要派发的数据     }   },</code></pre> <p>子组件通过<code>this.$bus.$on</code>来接受这个动作，得到了需要添加的数据，然后将这些数据渲染或存储等。<br /> 子组件内对此过程的全部操作：</p> <pre><code>created(){             this.$bus.$on('addCart',good =&gt; {             	//dosomthing  对传递过来的参数的处理动作              })         },</code></pre> <h3><a id="2Vuex_132" rel="nofollow"></a>2.Vuex</h3> <p>适用于较大的项目<br /> 详细请查看<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://blog.csdn.net/a18792627168/article/details/105959949"  rel="nofollow">文档</a></p> <h2><a id="_135" rel="nofollow"></a>跨组件传值</h2> <h3><a id="provideinject_136" rel="nofollow"></a>provide/inject</h3> <p>provide 和 inject 主要在开发高阶插件/组件库时使用。并不推荐用于普通应用程序代码中。<br /> 这对选项需要一起使用，以允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在起上下游关系成立的时间里始终生效。如果你熟悉 React，这与 React 的上下文特性很相似。</p> <p>provide 选项应该是一个对象或返回一个对象的函数。该对象包含可注入其子孙的 property。在该对象中你可以使用 ES2015 Symbols 作为 key，但是只在原生支持 Symbol 和 Reflect.ownKeys 的环境下可工作。</p> <pre><code>inject 选项应该是：     一个字符串数组，或     一个对象，对象的 key 是本地的绑定名，value 是：         在可用的注入内容中搜索用的 key (字符串或 Symbol)，或         一个对象，该对象的：             from property 是在可用的注入内容中搜索用的 key (字符串或 Symbol)             default property 是降级情况下使用的 value</code></pre> <blockquote> <p>提示：provide 和 inject 绑定并不是可响应的。这是刻意为之的。然而，如果你传入了一个可监听的对象，那么其对象的 property 还是可响应的。</p> </blockquote> <pre><code>// 父级组件提供 'foo' var Provider = {   provide: {     foo: 'bar'   },   // ... }  // 子组件注入 'foo' var Child = {   inject: ['foo'],   created () {     console.log(this.foo) // =&gt; "bar"   }   // ... }</code></pre> <p>参考官网链接<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://cn.vuejs.org/v2/api/?#provide-inject"  rel="nofollow">https://cn.vuejs.org/v2/api/?#provide-inject</a></p> <h2><a id="_174" rel="nofollow"></a>路由传参/值</h2> <p>如果路由传递参数也算组件间传值的话，可以参考Vue路由<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://blog.csdn.net/a18792627168/article/details/105246114"  rel="nofollow">Vue Router创建、传递参数、路由守卫</a>内的参数传递部分内容。</p> <p>推荐<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://segmentfault.com/a/1190000019208626"  rel="nofollow">vue组件间通信六种方式（完整版）</a>，非目前参考文档，是写完了才看到。</p> </div> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-1723.htm">springboot读取resources下文件方式</a></p>
+                                                        <p>下一个：<a href="/html/category/article-1725.htm">@Requestbody踩坑</a></p>
+                                                    </div>
+                                            </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/html/category/article-1873.htm" title="mysql用哪种时间_mysql存储日期使用什么类型">mysql用哪种时间_mysql存储日期使用什么类型</a></li>
+                        <li class="py-2"><a href="/html/category/article-1903.htm" title="基于JDK的动态代理原理分析">基于JDK的动态代理原理分析</a></li>
+                        <li class="py-2"><a href="/html/category/article-1888.htm" title="pandas 分批读取大量数据">pandas 分批读取大量数据</a></li>
+                        <li class="py-2"><a href="/html/category/article-1908.htm" title="mysql错误解决方案">mysql错误解决方案</a></li>
+                        <li class="py-2"><a href="/html/category/article-1869.htm" title="Python 一网打尽＜排序算法＞之从希尔排序算法的分治哲学开始">Python 一网打尽＜排序算法＞之从希尔排序算法的分治哲学开始</a></li>
+                        <li class="py-2"><a href="/html/category/article-1871.htm" title="Git基础Git创建本地版本库详解">Git基础Git创建本地版本库详解</a></li>
+                        <li class="py-2"><a href="/html/category/article-1899.htm" title="Azure DevOps通过SSH部署上传到服务器的应用">Azure DevOps通过SSH部署上传到服务器的应用</a></li>
+                        <li class="py-2"><a href="/html/category/article-1894.htm" title="小程序自定义导航栏组件">小程序自定义导航栏组件</a></li>
+                        <li class="py-2"><a href="/html/category/article-1864.htm" title="springboot基础(6):整合ActiveMQ">springboot基础(6):整合ActiveMQ</a></li>
+                        <li class="py-2"><a href="/html/category/article-1880.htm" title="React&#8217;s mouseEvent doesn&#8217;t have offsetX/offsetY">React&#8217;s mouseEvent doesn&#8217;t have offsetX/offsetY</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">36</span> <a href="/html/date/2024-06/" title="2024-06 归档">2024-06</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-05/" title="2024-05 归档">2024-05</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">60</span> <a href="/html/date/2024-04/" title="2024-04 归档">2024-04</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-03/" title="2024-03 归档">2024-03</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">50</span> <a href="/html/date/2024-02/" title="2024-02 归档">2024-02</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+
+
+                    </div>
+                </div>
+            </div> <!-- .container -->
+        </div> <!-- .page-section -->
+    </main>
+        <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 py-2">
+                    <p id="copyright">
+                        Afghanistan Address 版权所有 Powered by WordPress
+                    </p>
+                </div>
+                <div class="col-sm-6 py-2 text-right">
+                    <div class="d-inline-block px-3">
+                        <a href="#">Privacy</a>
+                    </div>
+                    <div class="d-inline-block px-3">
+                        <a href="#">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .container -->
+    </footer> <!-- .page-footer -->
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/jquery-3.5.1.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/bootstrap.bundle.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/wow/wow.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/js/owl.carousel.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/waypoints/jquery.waypoints.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/animateNumber/jquery.animateNumber.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/google-maps.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/theme.js"></script>
+    <script>
+    $(function() {
+        $('.js_to').click(function(){
+            var url = $(this).data('url');
+            var code = $(this).data('code');
+            url += code;
+
+            window.open(url);
+        })
+    });
+    </script>
+</body>
+
+</html>

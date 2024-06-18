@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1651.htm" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Qt的.pro文件格式解析 - Afghanistan Address</title>
+        <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/maicons.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/css/owl.carousel.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/theme.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?07d6804a416dbd216ab0e3d3e283ddad";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Back to top button -->
+    <div class="back-to-top"></div>
+    <header>
+                <nav class="navbar navbar-expand-lg navbar-light navbar-float">
+            <div class="container">
+                                <a href="/" class="navbar-brand">Afghanistan Address</a>
+                                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarContent">
+                    <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
+                                                <li class="nav-item">
+                            <a href="/" class="nav-link">首页</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="/html/category/" class="nav-link">文章分类</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="#" class="nav-link">关于</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">联系</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container mt-5">
+            <div class="page-banner">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-md-10">
+                        <h1 class="text-center">Qt的.pro文件格式解析</h1>
+                        <nav aria-label="Breadcrumb">
+                            <ul class="breadcrumb justify-content-center py-0 bg-transparent">
+                                <li class="breadcrumb-item"><a href="/">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/html/category/">文章分类</a></li>
+                                <li class="breadcrumb-item active">正文</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="page-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                          				  				  				<h1 id="qt的pro文件格式解析">Qt的.pro文件格式解析</h1> <p>在Qt中用qmake生成makefile文件，它是由.pro文件生成而来的，.pro文件的具体格式语法如下：</p> <h2 id="1注释">1.注释</h2> <p>.pro文件中注释采用#号，从“#”号开始，到该行的结束，例如：</p> <h2 id="2模板template">2.模板TEMPLATE</h2> <p>模板变量告诉qmake为这个应用程序生成那种makefile文件。下面是可提供使用的选择：</p> <pre><code class="language-makefile">TEMPLATE=app</code></pre> <ol> <li>app-建立一个应用程序的makefile。这是个默认值，所以如果模板没有被指定，该模板将会被使用。</li> <li>lib  -建立一个库的makefile。</li> <li>vcapp -建立一个应用程序的Visual Studio项目文件。</li> <li>vclib -建立一个库的VisualStudio项目文件。</li> <li>subdirs -这是一个特殊的模板，它可以创建一个能够进入特定目录并且为一个项目文件生成makefile，并且为它调用make的makefile。</li> </ol> <h2 id="3添加文件路径">3.添加文件路径</h2> <ol> <li> <p><code>HEADERS +=</code> 用来添加头文件</p> </li> <li> <p><code>SOURCES +=</code> 用来添加源文件</p> </li> <li> <p><code>FORMS +=</code> 用来添加 ui 文件</p> </li> <li> <p><code>RESOURCES +=</code> 用来添加资源文件</p> </li> <li> <p><code>INCLUDEPATH +=</code> 用来存放添加头文件的路径</p> </li> <li> <p><code>DEPENDPATH +=</code> 用来添加依赖相关路径</p> </li> <li> <p><code>LIBS +=</code> 用来添加库文件</p> </li> </ol> <p><strong>注意：</strong></p> <pre><code> INCLUDEPATH一般用在添加第三方 .dll 的时候所需的头文件路径；  HEADERS用来添加当前项目的路径；  LIBS += -LC:/Windows/System32/ -luser32  格式为：-L 路径 -l 库名  库比较多的时候可以用 \来达到换行目的  引用相对路径的库文件的时候，$$PWD 指的是项目 .pro 文件所在的路径，`$$OUT_PWD` 指的是编译的目标所在的路径。如果不清楚路径，可以使用 message($$PWD) 打印路径查看绝对路径。</code></pre> <ul> <li><code>DESTDIR +=</code> 指定生成的应用程序的存放目录。</li> <li><code>TARGET =</code> 指定生成的应用程序的名字。</li> <li><code>UI_DIR +=</code> 用来存放编译的时候 ui 生成的 ui_*.h 文件。</li> <li><code>RCC_DIR +=</code> 存放 .qrc 生成的 qrc_*.h 文件。</li> <li><code>MOC_DIR +=</code> 用来存放 moc 命令转换添加的<code>Q_OBJECT</code> 的 .h 文件为标准 .h 文件的存放路径。</li> <li><code>OBJECTS_DIR +=</code> 用来存放目标文件 .obj 存放的路径。</li> </ul> <p><strong>注：</strong></p> <p><code>UI_DIR</code> 、<code>RCC_DIR</code> 、<code>MOC_DIR</code> 、<code>OBJECTS_DIR</code> 可以认为都是用来存放中间文件，只是存放的中间文件有所不同，不指定的话默认会存放在 .pro 文件所在的路径，显得工程看起来比较乱</p> <h2 id="4添加配置信息">4.添加配置信息</h2> <ul> <li><code>CONFIG +=</code> 用来指的应用程序的配置信息。</li> </ul> <table> <thead> <tr> <th>参数</th> <th style="text-align: center">说明</th> </tr> </thead> <tbody> <tr> <td>release</td> <td style="text-align: center">项目被联编为一个发布的应用程序</td> </tr> <tr> <td>debug</td> <td style="text-align: center">项目被联编为一个debug的应用程序，debug 和 release 同时设置的时候，最后面的一个生效</td> </tr> <tr> <td>debug_and_release</td> <td style="text-align: center">项目被联编为 debug 和 release</td> </tr> <tr> <td>warn_on</td> <td style="text-align: center">编译器输出尽可能多的警告信息</td> </tr> <tr> <td>c++11</td> <td style="text-align: center">支持 c++11 的标准</td> </tr> <tr> <td>thread</td> <td style="text-align: center">支持线程，当 CONFIG 参数包含 qt 的时候，这个是默认支持的</td> </tr> </tbody> </table> <h2 id="5实例">5.实例</h2> <pre><code class="language-makefile">TEMPLATE	= app LANGUAGE	= C++  QT += widgets xml sql network opengl CONFIG	+= qt warn_on release  HEADERS	+= *.h SOURCES	+= *.cpp FORMS  += *.ui  RESOURCES += \     DiffusionFilter.qrc</code></pre> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-1650.htm">springboot系类代码：spring-boot-starter-data-mongodb-reactive</a></p>
+                                                        <p>下一个：<a href="/html/category/article-1652.htm">一文掌握 Spring Boot Profiles</a></p>
+                                                    </div>
+                                            </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/html/category/article-1851.htm" title="PHP可见性模式">PHP可见性模式</a></li>
+                        <li class="py-2"><a href="/html/category/article-1908.htm" title="mysql错误解决方案">mysql错误解决方案</a></li>
+                        <li class="py-2"><a href="/html/category/article-1887.htm" title="Vue.Draggable 文档总结">Vue.Draggable 文档总结</a></li>
+                        <li class="py-2"><a href="/html/category/article-1902.htm" title="树的同构（java实现）">树的同构（java实现）</a></li>
+                        <li class="py-2"><a href="/html/category/article-1878.htm" title="echart整体图形大小调整">echart整体图形大小调整</a></li>
+                        <li class="py-2"><a href="/html/category/article-1863.htm" title="为vscode开发一款svn右键菜单扩展">为vscode开发一款svn右键菜单扩展</a></li>
+                        <li class="py-2"><a href="/html/category/article-1896.htm" title="一、重写了equals为什么还要重写hashcode">一、重写了equals为什么还要重写hashcode</a></li>
+                        <li class="py-2"><a href="/html/category/article-1854.htm" title="java的Integer中也会有缓存">java的Integer中也会有缓存</a></li>
+                        <li class="py-2"><a href="/html/category/article-1891.htm" title="八大基本数据类型及数据类型之间的转换&#8212;zixiao">八大基本数据类型及数据类型之间的转换&#8212;zixiao</a></li>
+                        <li class="py-2"><a href="/html/category/article-1907.htm" title="为MySQL创建高性能索引_Mysql_">为MySQL创建高性能索引_Mysql_</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">36</span> <a href="/html/date/2024-06/" title="2024-06 归档">2024-06</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-05/" title="2024-05 归档">2024-05</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">60</span> <a href="/html/date/2024-04/" title="2024-04 归档">2024-04</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-03/" title="2024-03 归档">2024-03</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">50</span> <a href="/html/date/2024-02/" title="2024-02 归档">2024-02</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+
+
+                    </div>
+                </div>
+            </div> <!-- .container -->
+        </div> <!-- .page-section -->
+    </main>
+        <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 py-2">
+                    <p id="copyright">
+                        Afghanistan Address 版权所有 Powered by WordPress
+                    </p>
+                </div>
+                <div class="col-sm-6 py-2 text-right">
+                    <div class="d-inline-block px-3">
+                        <a href="#">Privacy</a>
+                    </div>
+                    <div class="d-inline-block px-3">
+                        <a href="#">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .container -->
+    </footer> <!-- .page-footer -->
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/jquery-3.5.1.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/bootstrap.bundle.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/wow/wow.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/js/owl.carousel.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/waypoints/jquery.waypoints.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/animateNumber/jquery.animateNumber.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/google-maps.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/theme.js"></script>
+    <script>
+    $(function() {
+        $('.js_to').click(function(){
+            var url = $(this).data('url');
+            var code = $(this).data('code');
+            url += code;
+
+            window.open(url);
+        })
+    });
+    </script>
+</body>
+
+</html>

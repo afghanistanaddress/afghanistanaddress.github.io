@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1866.htm" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>100ms的SQL把服务器搞崩溃了_在线工具 - Afghanistan Address</title>
+        <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/maicons.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/css/owl.carousel.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/theme.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?07d6804a416dbd216ab0e3d3e283ddad";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Back to top button -->
+    <div class="back-to-top"></div>
+    <header>
+                <nav class="navbar navbar-expand-lg navbar-light navbar-float">
+            <div class="container">
+                                <a href="/" class="navbar-brand">Afghanistan Address</a>
+                                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarContent">
+                    <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
+                                                <li class="nav-item">
+                            <a href="/" class="nav-link">首页</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="/html/category/" class="nav-link">文章分类</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="#" class="nav-link">关于</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">联系</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container mt-5">
+            <div class="page-banner">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-md-10">
+                        <h1 class="text-center">100ms的SQL把服务器搞崩溃了_在线工具</h1>
+                        <nav aria-label="Breadcrumb">
+                            <ul class="breadcrumb justify-content-center py-0 bg-transparent">
+                                <li class="breadcrumb-item"><a href="/">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/html/category/">文章分类</a></li>
+                                <li class="breadcrumb-item active">正文</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="page-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                          				  				  				<h3 id="前言">前言</h3> <p>一个项目上线了两个月，除了一些反馈的优化和小Bug之外，项目一切顺利；前期是属于推广阶段，可能使用人员没那么多，当然对于项目部署肯定提前想到并发量了，所以早就把集群安排上，而且还在测试环境搞了一下压测，绝对是没得问题的；但是，就在两个月后的一天，系统突然跑的比乌龟还慢，投诉开始就陆续反馈过来了。</p> <p>经过排查，原来是频繁执行一条耗时100ms的SQL导致，100ms感觉不长，但就是把系统搞崩了，具体细节如下。</p> <h3 id="正文">正文</h3> <h4 id="1-项目概况">1. 项目概况</h4> <p>项目采用ABP进行开发，集成统一的认证中心(IDS4)，部分数据对接第三方系统，拆分后的这个项目架构相对简单。</p> <p>考虑并发量不高，就算是高峰期也不会超过1000，于是就搞了个单台的数据库服务器(MySQL)，测试环境中经过压测，完全能抗住。</p> <p>上线时，由于线上资源的关系，DB服务器的配置没有按测试环境的标准来分配，相关人员想着后续看情况进行补配。上线推的比较紧，简单评估了配置风险，初步判断没啥大问题，于是就推上线了。</p> <p>相关技术栈：ABP、IdentityServer4、Autofac、AutoMapper、Quartz.NET、EF Core、Redis、MySQL等，这都不重要，重要的是100ms的SQL把系统搞崩了。</p> <p>由于系统相对不大，并没有把分布式日志、调度监控，性能监控集成上去。</p> <h4 id="2-问题排查">2. 问题排查</h4> <p>上线期间，前期处于使用推广阶段，一切正常。两个月后的一天，系统处于使用高峰时段，突然陆续收到反馈：系统有点卡！！！于是赶紧进行排查。</p> <p>由于系统已经是集群部署的，慢这个问题首先怀疑是数据库服务器，于是让DBA的同事排查了一下，没有锁，只是有大量事务等待提交(waiting for handler commit)，通过如下命令可查的：</p> <pre><code class="language-mysql"># 查看正在执行的脚本 select *  from information_schema.PROCESSLIST t where t.COMMAND != 'Sleep'  order by time desc; </code></pre> <p>看到都是插入审计日志记录导致，一看日志记录频率，差不多一秒500条记录。DBA同事说可能是记录插入频繁导致，此时CPU已经爆到100%了，为了快速解决问题，于是就赶紧关掉了一些不必要的日志记录。</p> <p>这么一改，稍微降了一点，没有事务提交的记录，系统勉强可以撑着用，但是CPU还是在85%~97%波动；</p> <p>看到这种情况，当然还是不放心，继续排查。 中间有对服务器的配置产生过怀疑，但非常肯定的是这不是主要原因，于是和DBA的同事继续排查。</p> <p>系统虽然可以正常使用，但时不时的也看看监控屏，CPU一直处于高水位状态，还是有点慌的，因为一有问题，信息和电话都要爆。</p> <p>突然DBA同事发现有一个单表查询的SQL执行比较频繁，于是单独拿出来试了一下，查询时间150ms左右，这个表的数据量不大，8万左右，但没有加任何索引，因为想着数据量不大，查询时长还可接受，所以当时就没有加相关索引。</p> <p>定位到这条SQL后，想到的第一步就是增加索引，在测试环境上试了一把，执行效率直接飞速提高到1ms；效果如下：</p> <p><img decoding="async" src="http://img.555519.xyz/uploads3/20220501/66b3fff8f5aef6264544501cddbffc6b.jpg" alt="100ms的SQL把服务器搞崩溃了_在线工具"></p> <p>所以和DBA同事达成一致意见，在生成环境上增加复合索引(<strong>创建索引一定要注意字段顺序</strong>)，在中午时候，系统使用频率不太高，于是就在生成上快速加了索引，我去，CPU一下降到了20%以内，意不意外；就算在使用高峰期，也没超过20%，通过zabbix工具监控看到CPU的效果：</p> <p><img decoding="async" src="http://img.555519.xyz/uploads3/20220501/9e8156547a38348d081c31f2a3da3c2b.jpg" alt="100ms的SQL把服务器搞崩溃了_在线工具"></p> <p>问题算是解决了，总算松了一口气。</p> <p>这里有个问题： CPU都爆了为什么没有报警提醒，这块DBA同事正在排查相关配置。这里发现CPU爆了，还是无意的远程到服务器，发现很卡，一看CPU才知道爆了。</p> <p>系统虽小，问题不大，但其实暴露的问题还是挺多。</p> <h3 id="总结">总结</h3> <p>这次线上小事故暂时分享到这，因为项目不大，所以没有做那么多监控，但以下建议，小伙伴可以参考一下：</p> <ul> <li> <strong>频繁执行的SQL语句，一定要保证其执行效率</strong>，不要小看ms级的优化，如果并发量上来也会是灾难；</li> <li> <strong>对应服务器要做好监控，指定预警范围提醒，避免打个措手不及</strong>；</li> <li> <strong>尽量避免频繁的自动刷新</strong>；引入实时通信的方式，会减少不必要的访问压力。</li> <li> <strong>关于系统频繁记录的审计日志，尽量不要和业务数据库存放在一起</strong>；大量的日志频繁操作数据库是很占用IO的。</li> <li> <strong>对于拆分的项目，再加上集群部署，分布式日志管理必须安排上</strong>，不然分析日志排查问题是个费时费脑的事</li> </ul> <p>关注“<strong>Code综艺圈</strong>”，和我一起学习吧。</p> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-1865.htm">java数据类型（8个基本数据类型+3个引用数据类型）与数据类型转换知识点</a></p>
+                                                        <p>下一个：<a href="/html/category/article-1867.htm">C ++ STL中的list_remove()和list remove_if()</a></p>
+                                                    </div>
+                                            </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/html/category/article-1890.htm" title="解决Redis并发带来的雪崩，击穿和穿透问题，以及搭建一个Redis伪集群">解决Redis并发带来的雪崩，击穿和穿透问题，以及搭建一个Redis伪集群</a></li>
+                        <li class="py-2"><a href="/html/category/article-1866.htm" title="100ms的SQL把服务器搞崩溃了_在线工具">100ms的SQL把服务器搞崩溃了_在线工具</a></li>
+                        <li class="py-2"><a href="/html/category/article-1853.htm" title="分布式服务请求报错：Read timed out executing POST http://businessApi/app/app/login">分布式服务请求报错：Read timed out executing POST http://businessApi/app/app/login</a></li>
+                        <li class="py-2"><a href="/html/category/article-1908.htm" title="mysql错误解决方案">mysql错误解决方案</a></li>
+                        <li class="py-2"><a href="/html/category/article-1883.htm" title="C#实现文件Move和Copy操作_C#教程_">C#实现文件Move和Copy操作_C#教程_</a></li>
+                        <li class="py-2"><a href="/html/category/article-1906.htm" title="Java Random随机数">Java Random随机数</a></li>
+                        <li class="py-2"><a href="/html/category/article-1871.htm" title="Git基础Git创建本地版本库详解">Git基础Git创建本地版本库详解</a></li>
+                        <li class="py-2"><a href="/html/category/article-1898.htm" title="Kotlin 标准函数和静态方法[第一行代码 Kotlin 学习笔记]">Kotlin 标准函数和静态方法[第一行代码 Kotlin 学习笔记]</a></li>
+                        <li class="py-2"><a href="/html/category/article-1909.htm" title="Redis的高并发是如何支持的">Redis的高并发是如何支持的</a></li>
+                        <li class="py-2"><a href="/html/category/article-1889.htm" title="win11系统照相机亮度怎么调节">win11系统照相机亮度怎么调节</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">36</span> <a href="/html/date/2024-06/" title="2024-06 归档">2024-06</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-05/" title="2024-05 归档">2024-05</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">60</span> <a href="/html/date/2024-04/" title="2024-04 归档">2024-04</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-03/" title="2024-03 归档">2024-03</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">50</span> <a href="/html/date/2024-02/" title="2024-02 归档">2024-02</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+
+
+                    </div>
+                </div>
+            </div> <!-- .container -->
+        </div> <!-- .page-section -->
+    </main>
+        <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 py-2">
+                    <p id="copyright">
+                        Afghanistan Address 版权所有 Powered by WordPress
+                    </p>
+                </div>
+                <div class="col-sm-6 py-2 text-right">
+                    <div class="d-inline-block px-3">
+                        <a href="#">Privacy</a>
+                    </div>
+                    <div class="d-inline-block px-3">
+                        <a href="#">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .container -->
+    </footer> <!-- .page-footer -->
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/jquery-3.5.1.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/bootstrap.bundle.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/wow/wow.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/js/owl.carousel.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/waypoints/jquery.waypoints.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/animateNumber/jquery.animateNumber.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/google-maps.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/theme.js"></script>
+    <script>
+    $(function() {
+        $('.js_to').click(function(){
+            var url = $(this).data('url');
+            var code = $(this).data('code');
+            url += code;
+
+            window.open(url);
+        })
+    });
+    </script>
+</body>
+
+</html>

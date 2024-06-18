@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1856.htm" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Nacos配置中心集群原理及源码分析 - Afghanistan Address</title>
+        <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/maicons.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/css/owl.carousel.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/theme.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?07d6804a416dbd216ab0e3d3e283ddad";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Back to top button -->
+    <div class="back-to-top"></div>
+    <header>
+                <nav class="navbar navbar-expand-lg navbar-light navbar-float">
+            <div class="container">
+                                <a href="/" class="navbar-brand">Afghanistan Address</a>
+                                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarContent">
+                    <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
+                                                <li class="nav-item">
+                            <a href="/" class="nav-link">首页</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="/html/category/" class="nav-link">文章分类</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="#" class="nav-link">关于</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">联系</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container mt-5">
+            <div class="page-banner">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-md-10">
+                        <h1 class="text-center">Nacos配置中心集群原理及源码分析</h1>
+                        <nav aria-label="Breadcrumb">
+                            <ul class="breadcrumb justify-content-center py-0 bg-transparent">
+                                <li class="breadcrumb-item"><a href="/">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/html/category/">文章分类</a></li>
+                                <li class="breadcrumb-item active">正文</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="page-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                          				  				  				<p>Nacos作为配置中心，必然需要保证服务节点的高可用性，那么Nacos是如何实现集群的呢？</p> <p>下面这个图，表示Nacos集群的部署图。</p> <p><img decoding="async" src="http://img.555519.xyz/uploads3/20220510/c7f1b49cc76ca6fadd423854ac79fc22.jpg" alt="Nacos配置中心集群原理及源码分析"></p> <h2 id="nacos集群工作原理">Nacos集群工作原理</h2> <p>Nacos作为配置中心的集群结构中，是一种无中心化节点的设计，由于没有主从节点，也没有选举机制，所以为了能够实现热备，就需要增加虚拟IP（VIP）。</p> <p>Nacos的数据存储分为两部分</p> <ol> <li>Mysql数据库存储，所有Nacos节点共享同一份数据，数据的副本机制由Mysql本身的主从方案来解决，从而保证数据的可靠性。</li> <li>每个节点的本地磁盘，会保存一份全量数据，具体路径：<code>/data/program/nacos-1/data/config-data/${GROUP}</code>.</li> </ol> <p>在Nacos的设计中，Mysql是一个中心数据仓库，且认为在Mysql中的数据是绝对正确的。 除此之外，Nacos在启动时会把Mysql中的数据写一份到本地磁盘。</p> <blockquote> <p>这么设计的好处是可以提高性能，当客户端需要请求某个配置项时，服务端会想Ian从磁盘中读取对应文件返回，而磁盘的读取效率要比数据库效率高。</p> </blockquote> <p>当配置发生变更时：</p> <ol> <li>Nacos会把变更的配置保存到数据库，然后再写入本地文件。</li> <li>接着发送一个HTTP请求，给到集群中的其他节点，其他节点收到事件后，从Mysql中dump刚刚写入的数据到本地文件中。</li> </ol> <blockquote> <p>另外，NacosServer启动后，会同步启动一个定时任务，每隔6小时，会dump一次全量数据到本地文件</p> </blockquote> <h2 id="配置变更同步入口">配置变更同步入口</h2> <p>当配置发生修改、删除、新增操作时，通过发布一个<code>notifyConfigChange</code>事件。</p> <pre><code class="language-java">@PostMapping @Secured(action = ActionTypes.WRITE, parser = ConfigResourceParser.class) public Boolean publishConfig(HttpServletRequest request, HttpServletResponse response,         @RequestParam(value = "dataId") String dataId, @RequestParam(value = "group") String group,         @RequestParam(value = "tenant", required = false, defaultValue = StringUtils.EMPTY) String tenant,         @RequestParam(value = "content") String content, @RequestParam(value = "tag", required = false) String tag,         @RequestParam(value = "appName", required = false) String appName,         @RequestParam(value = "src_user", required = false) String srcUser,         @RequestParam(value = "config_tags", required = false) String configTags,         @RequestParam(value = "desc", required = false) String desc,         @RequestParam(value = "use", required = false) String use,         @RequestParam(value = "effect", required = false) String effect,         @RequestParam(value = "type", required = false) String type,         @RequestParam(value = "schema", required = false) String schema) throws NacosException {         //省略..     if (StringUtils.isBlank(betaIps)) {         if (StringUtils.isBlank(tag)) {             persistService.insertOrUpdate(srcIp, srcUser, configInfo, time, configAdvanceInfo, true);             ConfigChangePublisher                     .notifyConfigChange(new ConfigDataChangeEvent(false, dataId, group, tenant, time.getTime()));         } else {             persistService.insertOrUpdateTag(configInfo, tag, srcIp, srcUser, time, true);             ConfigChangePublisher.notifyConfigChange(                     new ConfigDataChangeEvent(false, dataId, group, tenant, tag, time.getTime()));         }     }//省略     return true; }</code></pre> <h2 id="asyncnotifyservice">AsyncNotifyService</h2> <p>配置数据变更事件，专门有一个监听器AsyncNotifyService，它会处理数据变更后的同步事件。</p> <pre><code class="language-java">@Autowired public AsyncNotifyService(ServerMemberManager memberManager) {     this.memberManager = memberManager;          // Register ConfigDataChangeEvent to NotifyCenter.     NotifyCenter.registerToPublisher(ConfigDataChangeEvent.class, NotifyCenter.ringBufferSize);          // Register A Subscriber to subscribe ConfigDataChangeEvent.     NotifyCenter.registerSubscriber(new Subscriber() {                  @Override         public void onEvent(Event event) {             // Generate ConfigDataChangeEvent concurrently             if (event instanceof ConfigDataChangeEvent) {                 ConfigDataChangeEvent evt = (ConfigDataChangeEvent) event;                 long dumpTs = evt.lastModifiedTs;                 String dataId = evt.dataId;                 String group = evt.group;                 String tenant = evt.tenant;                 String tag = evt.tag;                 Collection&lt;Member&gt; ipList = memberManager.allMembers(); //得到集群中的ip列表                                  // 构建NotifySingleTask，并添加到队列中。                 Queue&lt;NotifySingleTask&gt; queue = new LinkedList&lt;NotifySingleTask&gt;();                 for (Member member : ipList) { //遍历集群中的每个节点                     queue.add(new NotifySingleTask(dataId, group, tenant, tag, dumpTs, member.getAddress(),                             evt.isBeta));                 }                 //异步执行任务 AsyncTask                 ConfigExecutor.executeAsyncNotify(new AsyncTask(nacosAsyncRestTemplate, queue));             }         }                  @Override         public Class&lt;? extends Event&gt; subscribeType() {             return ConfigDataChangeEvent.class;         }     }); }</code></pre> <h2 id="asynctask">AsyncTask</h2> <pre><code class="language-java">@Override public void run() {     executeAsyncInvoke(); }  private void executeAsyncInvoke() {     while (!queue.isEmpty()) {//遍历队列中的数据，直到数据为空         NotifySingleTask task = queue.poll(); //获取task         String targetIp = task.getTargetIP(); //获取目标ip                  if (memberManager.hasMember(targetIp)) { //如果集群中的ip列表包含目标ip             // start the health check and there are ips that are not monitored, put them directly in the notification queue, otherwise notify             //判断目标ip的健康状态             boolean unHealthNeedDelay = memberManager.isUnHealth(targetIp); //             if (unHealthNeedDelay) { //如果目标服务是非健康，则继续添加到队列中，延后再执行。                 // target ip is unhealthy, then put it in the notification list                 ConfigTraceService.logNotifyEvent(task.getDataId(), task.getGroup(), task.getTenant(), null,                         task.getLastModified(), InetUtils.getSelfIP(), ConfigTraceService.NOTIFY_EVENT_UNHEALTH,                         0, task.target);                 // get delay time and set fail count to the task                 asyncTaskExecute(task);             } else {                 //构建header                 Header header = Header.newInstance();                 header.addParam(NotifyService.NOTIFY_HEADER_LAST_MODIFIED, String.valueOf(task.getLastModified()));                 header.addParam(NotifyService.NOTIFY_HEADER_OP_HANDLE_IP, InetUtils.getSelfIP());                 if (task.isBeta) {                     header.addParam("isBeta", "true");                 }                 AuthHeaderUtil.addIdentityToHeader(header);                 //通过restTemplate发起远程调用，如果调用成功，则执行AsyncNotifyCallBack的回调方法                 restTemplate.get(task.url, header, Query.EMPTY, String.class, new AsyncNotifyCallBack(task));             }         }     } }</code></pre> <h2 id="目标节点接收请求">目标节点接收请求</h2> <blockquote> <p>数据同步的请求地址为，task.url=http://192.168.8.16:8848/nacos/v1/cs/communication/dataChange?dataId=log.yaml&amp;group=DEFAULT_GROUP</p> </blockquote> <pre><code class="language-java">@GetMapping("/dataChange") public Boolean notifyConfigInfo(HttpServletRequest request, @RequestParam("dataId") String dataId,         @RequestParam("group") String group,         @RequestParam(value = "tenant", required = false, defaultValue = StringUtils.EMPTY) String tenant,         @RequestParam(value = "tag", required = false) String tag) {     dataId = dataId.trim();     group = group.trim();     String lastModified = request.getHeader(NotifyService.NOTIFY_HEADER_LAST_MODIFIED);     long lastModifiedTs = StringUtils.isEmpty(lastModified) ? -1 : Long.parseLong(lastModified);     String handleIp = request.getHeader(NotifyService.NOTIFY_HEADER_OP_HANDLE_IP);     String isBetaStr = request.getHeader("isBeta");     if (StringUtils.isNotBlank(isBetaStr) &amp;&amp; trueStr.equals(isBetaStr)) {         dumpService.dump(dataId, group, tenant, lastModifiedTs, handleIp, true);     } else {         //         dumpService.dump(dataId, group, tenant, tag, lastModifiedTs, handleIp);     }     return true; }</code></pre> <p>dumpService.dump用来实现配置的更新，代码如下</p> <p>当前任务会被添加到DumpTaskMgr中管理。</p> <pre><code class="language-java">public void dump(String dataId, String group, String tenant, String tag, long lastModified, String handleIp,         boolean isBeta) {     String groupKey = GroupKey2.getKey(dataId, group, tenant);     String taskKey = String.join("+", dataId, group, tenant, String.valueOf(isBeta), tag);     dumpTaskMgr.addTask(taskKey, new DumpTask(groupKey, tag, lastModified, handleIp, isBeta));     DUMP_LOG.info("[dump-task] add task. groupKey={}, taskKey={}", groupKey, taskKey); }</code></pre> <p>TaskManager.addTask, 先调用父类去完成任务添加。</p> <pre><code class="language-java">@Override public void addTask(Object key, AbstractDelayTask newTask) {     super.addTask(key, newTask);     MetricsMonitor.getDumpTaskMonitor().set(tasks.size()); }</code></pre> <p>在这种场景设计中，一般都会采用生产者消费者模式来完成，因此这里不难猜测到，任务会被保存到一个队列中，然后有另外一个线程来执行。</p> <h2 id="nacosdelaytaskexecuteengine">NacosDelayTaskExecuteEngine</h2> <p>TaskManager的父类是NacosDelayTaskExecuteEngine,</p> <p>这个类中有一个成员属性<code>protected final ConcurrentHashMap&lt;Object, AbstractDelayTask&gt; tasks;</code>，专门来保存延期执行的任务类型AbstractDelayTask.</p> <p>在这个类的构造方法中，初始化了一个延期执行的任务，其中具体的任务是ProcessRunnable.</p> <pre><code class="language-java">public NacosDelayTaskExecuteEngine(String name, int initCapacity, Logger logger, long processInterval) {     super(logger);     tasks = new ConcurrentHashMap&lt;Object, AbstractDelayTask&gt;(initCapacity);     processingExecutor = ExecutorFactory.newSingleScheduledExecutorService(new NameThreadFactory(name));     processingExecutor             .scheduleWithFixedDelay(new ProcessRunnable(), processInterval, processInterval, TimeUnit.MILLISECONDS); }</code></pre> <h2 id="processrunnable">ProcessRunnable</h2> <pre><code class="language-java">private class ProcessRunnable implements Runnable {          @Override     public void run() {         try {             processTasks();         } catch (Throwable e) {             getEngineLog().error(e.toString(), e);         }     } }</code></pre> <h2 id="processtasks">processTasks</h2> <pre><code class="language-java">protected void processTasks() {     //获取所有的任务     Collection&lt;Object&gt; keys = getAllTaskKeys();     for (Object taskKey : keys) {         AbstractDelayTask task = removeTask(taskKey);         if (null == task) {             continue;         }         //获取任务处理器，这里返回的是DumpProcessor         NacosTaskProcessor processor = getProcessor(taskKey);         if (null == processor) {             getEngineLog().error("processor not found for task, so discarded. " + task);             continue;         }         try {             // ReAdd task if process failed             //执行具体任务             if (!processor.process(task)) {                 retryFailedTask(taskKey, task);             }         } catch (Throwable e) {             getEngineLog().error("Nacos task execute error : " + e.toString(), e);             retryFailedTask(taskKey, task);         }     } }</code></pre> <h2 id="dumpprocessorprocess">DumpProcessor.process</h2> <p>读取数据库的最新数据，然后更新本地缓存和磁盘。</p> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-1855.htm">K8S 中的pod 和 node 区别</a></p>
+                                                        <p>下一个：<a href="/html/category/article-1857.htm">Feign 传输 MultipartFile 的一些问题</a></p>
+                                                    </div>
+                                            </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/html/category/article-1863.htm" title="为vscode开发一款svn右键菜单扩展">为vscode开发一款svn右键菜单扩展</a></li>
+                        <li class="py-2"><a href="/html/category/article-1858.htm" title="Vue实现评论功能">Vue实现评论功能</a></li>
+                        <li class="py-2"><a href="/html/category/article-1852.htm" title="mysql 时间戳定义_mysql之TIMESTAMP（时间戳）用法详解">mysql 时间戳定义_mysql之TIMESTAMP（时间戳）用法详解</a></li>
+                        <li class="py-2"><a href="/html/category/article-1890.htm" title="解决Redis并发带来的雪崩，击穿和穿透问题，以及搭建一个Redis伪集群">解决Redis并发带来的雪崩，击穿和穿透问题，以及搭建一个Redis伪集群</a></li>
+                        <li class="py-2"><a href="/html/category/article-1856.htm" title="Nacos配置中心集群原理及源码分析">Nacos配置中心集群原理及源码分析</a></li>
+                        <li class="py-2"><a href="/html/category/article-1878.htm" title="echart整体图形大小调整">echart整体图形大小调整</a></li>
+                        <li class="py-2"><a href="/html/category/article-1895.htm" title="Vue 学习  之 封装模块方法">Vue 学习  之 封装模块方法</a></li>
+                        <li class="py-2"><a href="/html/category/article-1859.htm" title="【Azure Developer】使用 adal4j(Azure Active Directory authentication library for Java)如何来获取Token呢 (通过用户名和密码方式获取Access Token)_在线工具">【Azure Developer】使用 adal4j(Azure Active Directory authentication library for Java)如何来获取Token呢 (通过用户名和密码方式获取Access Token)_在线工具</a></li>
+                        <li class="py-2"><a href="/html/category/article-1853.htm" title="分布式服务请求报错：Read timed out executing POST http://businessApi/app/app/login">分布式服务请求报错：Read timed out executing POST http://businessApi/app/app/login</a></li>
+                        <li class="py-2"><a href="/html/category/article-1900.htm" title="网页盒子水平布局方式">网页盒子水平布局方式</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">36</span> <a href="/html/date/2024-06/" title="2024-06 归档">2024-06</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-05/" title="2024-05 归档">2024-05</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">60</span> <a href="/html/date/2024-04/" title="2024-04 归档">2024-04</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-03/" title="2024-03 归档">2024-03</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">50</span> <a href="/html/date/2024-02/" title="2024-02 归档">2024-02</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+
+
+                    </div>
+                </div>
+            </div> <!-- .container -->
+        </div> <!-- .page-section -->
+    </main>
+        <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 py-2">
+                    <p id="copyright">
+                        Afghanistan Address 版权所有 Powered by WordPress
+                    </p>
+                </div>
+                <div class="col-sm-6 py-2 text-right">
+                    <div class="d-inline-block px-3">
+                        <a href="#">Privacy</a>
+                    </div>
+                    <div class="d-inline-block px-3">
+                        <a href="#">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .container -->
+    </footer> <!-- .page-footer -->
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/jquery-3.5.1.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/bootstrap.bundle.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/wow/wow.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/js/owl.carousel.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/waypoints/jquery.waypoints.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/animateNumber/jquery.animateNumber.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/google-maps.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/theme.js"></script>
+    <script>
+    $(function() {
+        $('.js_to').click(function(){
+            var url = $(this).data('url');
+            var code = $(this).data('code');
+            url += code;
+
+            window.open(url);
+        })
+    });
+    </script>
+</body>
+
+</html>

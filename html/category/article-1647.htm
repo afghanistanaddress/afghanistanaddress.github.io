@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1647.htm" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Django实现统一包装接口返回值数据格式 - Afghanistan Address</title>
+        <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/maicons.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/css/owl.carousel.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/theme.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?07d6804a416dbd216ab0e3d3e283ddad";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Back to top button -->
+    <div class="back-to-top"></div>
+    <header>
+                <nav class="navbar navbar-expand-lg navbar-light navbar-float">
+            <div class="container">
+                                <a href="/" class="navbar-brand">Afghanistan Address</a>
+                                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarContent">
+                    <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
+                                                <li class="nav-item">
+                            <a href="/" class="nav-link">首页</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="/html/category/" class="nav-link">文章分类</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="#" class="nav-link">关于</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">联系</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container mt-5">
+            <div class="page-banner">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-md-10">
+                        <h1 class="text-center">Django实现统一包装接口返回值数据格式</h1>
+                        <nav aria-label="Breadcrumb">
+                            <ul class="breadcrumb justify-content-center py-0 bg-transparent">
+                                <li class="breadcrumb-item"><a href="/">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/html/category/">文章分类</a></li>
+                                <li class="breadcrumb-item active">正文</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="page-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                          				  				  				<h2 id="前言">前言</h2> <p>最近实在太忙了，开始了一个新的项目，为了快速形成产品，我选择了Django来实现后端，然后又拿起了之前我封装了项目脚手架<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://github.com/Deali-Axy/DjangoStarter"  target="_blank" rel="nofollow">「DjangoStarter」</a>。</p> <p>由于前段时间我写了不少.NetCore的后端代码，对CRUD的接口开发又有了一些新的理解，所以肯定也要把DjangoStarter改造一番，改得更加顺手~</p> <blockquote> <p>题外话：话说我在前端终于真正用上react，不得不说 ts + react 真好用，「前端带师」的安利可真不错啊（妙啊</p> </blockquote> <h2 id="正题">正题</h2> <p>准确来讲是搭配<code>DjangoRestFramework</code>来实现的，核心代码分为两部分，一个是错误处理包装，一个是响应包装<code>renderer</code>。</p> <p>无论请求是否报错，都会被我们自定义的<code>renderer</code>包装。</p> <h2 id="代码">代码</h2> <p>开始上代码吧~</p> <p>首先在项目里添加一个新的Python包，位置根据情况自行安排，我在<code>DjangoStarter</code>模板中的位置是<code>utils/response</code>，接下来的两个文件都会放在这个目录中</p> <p>第一个是错误处理的<code>exception.py</code>文件代码</p> <pre><code class="language-python">from typing import Dict  from rest_framework.exceptions import ValidationError from rest_framework.views import exception_handler from rest_framework.views import Response from rest_framework.utils.serializer_helpers import ReturnDict from rest_framework import status   def custom_handler(err: ValidationError, context: dict):     # 先调用REST framework默认的异常处理方法获得标准错误响应对象     response: Response = exception_handler(err, context)      if response is None:         return Response({             'message': f'服务器错误:{err}'         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR, exception=True)      else:         res = {'message': response.reason_phrase}         res.update(response.data)         return Response(res, status=response.status_code, exception=True)</code></pre> <p>然后是自定义<code>renderer.py</code>代码：</p> <pre><code class="language-python">from rest_framework.renderers import JSONRenderer   class CustomRenderer(JSONRenderer):     # 重构render方法     def render(self, data, accepted_media_type=None, renderer_context=None):         if renderer_context:             # 响应的信息，成功和错误的都是这个             # 成功和异常响应的信息，异常信息在前面自定义异常处理中已经处理为{'message': 'error'}这种格式              # 如果返回的data为字典             if isinstance(data, dict):                 # 响应信息中有message和code这两个key，则获取响应信息中的message和code，并且将原本data中的这两个key删除，放在自定义响应信息里                 # 响应信息中没有则将msg内容改为请求成功 code改为请求的状态码                 msg = data.pop('message', '请求成功')                 code = data.pop('code', renderer_context["response"].status_code)             # 如果不是字典则将msg内容改为请求成功 code改为响应的状态码             else:                 msg = '请求成功'                 code = renderer_context["response"].status_code              # 自定义返回的格式             ret = {                 'message': msg,                 'code': code,                 'data': data,             }             # 返回JSON数据             return super().render(ret, accepted_media_type, renderer_context)         else:             return super().render(data, accepted_media_type, renderer_context)</code></pre> <p>关键的地方都注释了，很容易看懂</p> <p>包装出来每个接口的返回值就都是这个样子</p> <pre><code class="language-json">{     "message": "msg",     "code": 200,     "data": {         "data1": "123"     } }</code></pre> <h2 id="配置">配置</h2> <p>为了让上面的代码发挥作用，还得配置一下RestFramework</p> <p>编辑<code>settings.py</code>文件，在<code>REST_FRAMEWORK</code>节点添加这两个配置，注意路径要和前面两个文件的路径一致。这里我是以<code>DjangoStarter</code>项目为例。</p> <pre><code class="language-python">REST_FRAMEWORK = {     # 全局配置异常模块     'EXCEPTION_HANDLER': 'utils.response.exception.custom_handler',     # 修改默认返回JSON的renderer的类     'DEFAULT_RENDERER_CLASSES': ('utils.response.renderer.CustomRenderer',), }</code></pre> <p>现在就完成了~ 就是这么简单。</p> <blockquote> <p>（比AspNetCore包装返回值简单……）</p> </blockquote> <p>完整代码可以在GitHub上查看：<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://github.com/Deali-Axy/DjangoStarter"  target="_blank" rel="nofollow">https://github.com/Deali-Axy/DjangoStarter</a></p> <h2 id="参考资料">参考资料</h2> <ul> <li>Django rest framework自定义返回数据格式：<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://blog.csdn.net/qq_41475058/article/details/112676908"  target="_blank" rel="nofollow">https://blog.csdn.net/qq_41475058/article/details/112676908</a></li> </ul> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-1646.htm">Docker镜像构建之docker commit</a></p>
+                                                        <p>下一个：<a href="/html/category/article-1648.htm">vue动态获取ref方式</a></p>
+                                                    </div>
+                                            </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/html/category/article-1897.htm" title="MySQL系列复习（9）分组查询（group by、having）">MySQL系列复习（9）分组查询（group by、having）</a></li>
+                        <li class="py-2"><a href="/html/category/article-1862.htm" title="将无效字符串作为参数传递给STR_TO_DATE()函数时，MySQL将返回什么？">将无效字符串作为参数传递给STR_TO_DATE()函数时，MySQL将返回什么？</a></li>
+                        <li class="py-2"><a href="/html/category/article-1906.htm" title="Java Random随机数">Java Random随机数</a></li>
+                        <li class="py-2"><a href="/html/category/article-1863.htm" title="为vscode开发一款svn右键菜单扩展">为vscode开发一款svn右键菜单扩展</a></li>
+                        <li class="py-2"><a href="/html/category/article-1852.htm" title="mysql 时间戳定义_mysql之TIMESTAMP（时间戳）用法详解">mysql 时间戳定义_mysql之TIMESTAMP（时间戳）用法详解</a></li>
+                        <li class="py-2"><a href="/html/category/article-1883.htm" title="C#实现文件Move和Copy操作_C#教程_">C#实现文件Move和Copy操作_C#教程_</a></li>
+                        <li class="py-2"><a href="/html/category/article-1893.htm" title="JavaScript中querySelector和getElementByld(getXXXBy XX)的区别">JavaScript中querySelector和getElementByld(getXXXBy XX)的区别</a></li>
+                        <li class="py-2"><a href="/html/category/article-1859.htm" title="【Azure Developer】使用 adal4j(Azure Active Directory authentication library for Java)如何来获取Token呢 (通过用户名和密码方式获取Access Token)_在线工具">【Azure Developer】使用 adal4j(Azure Active Directory authentication library for Java)如何来获取Token呢 (通过用户名和密码方式获取Access Token)_在线工具</a></li>
+                        <li class="py-2"><a href="/html/category/article-1880.htm" title="React&#8217;s mouseEvent doesn&#8217;t have offsetX/offsetY">React&#8217;s mouseEvent doesn&#8217;t have offsetX/offsetY</a></li>
+                        <li class="py-2"><a href="/html/category/article-1910.htm" title="[转载] Python中format函数用法">[转载] Python中format函数用法</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">36</span> <a href="/html/date/2024-06/" title="2024-06 归档">2024-06</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-05/" title="2024-05 归档">2024-05</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">60</span> <a href="/html/date/2024-04/" title="2024-04 归档">2024-04</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-03/" title="2024-03 归档">2024-03</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">50</span> <a href="/html/date/2024-02/" title="2024-02 归档">2024-02</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+
+
+                    </div>
+                </div>
+            </div> <!-- .container -->
+        </div> <!-- .page-section -->
+    </main>
+        <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 py-2">
+                    <p id="copyright">
+                        Afghanistan Address 版权所有 Powered by WordPress
+                    </p>
+                </div>
+                <div class="col-sm-6 py-2 text-right">
+                    <div class="d-inline-block px-3">
+                        <a href="#">Privacy</a>
+                    </div>
+                    <div class="d-inline-block px-3">
+                        <a href="#">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .container -->
+    </footer> <!-- .page-footer -->
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/jquery-3.5.1.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/bootstrap.bundle.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/wow/wow.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/js/owl.carousel.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/waypoints/jquery.waypoints.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/animateNumber/jquery.animateNumber.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/google-maps.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/theme.js"></script>
+    <script>
+    $(function() {
+        $('.js_to').click(function(){
+            var url = $(this).data('url');
+            var code = $(this).data('code');
+            url += code;
+
+            window.open(url);
+        })
+    });
+    </script>
+</body>
+
+</html>

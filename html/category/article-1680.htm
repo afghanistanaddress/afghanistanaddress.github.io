@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1680.htm" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Eureka Server及Client 配置信息详解 - Afghanistan Address</title>
+        <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/maicons.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/css/owl.carousel.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/theme.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?07d6804a416dbd216ab0e3d3e283ddad";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Back to top button -->
+    <div class="back-to-top"></div>
+    <header>
+                <nav class="navbar navbar-expand-lg navbar-light navbar-float">
+            <div class="container">
+                                <a href="/" class="navbar-brand">Afghanistan Address</a>
+                                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarContent">
+                    <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
+                                                <li class="nav-item">
+                            <a href="/" class="nav-link">首页</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="/html/category/" class="nav-link">文章分类</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="#" class="nav-link">关于</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">联系</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container mt-5">
+            <div class="page-banner">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-md-10">
+                        <h1 class="text-center">Eureka Server及Client 配置信息详解</h1>
+                        <nav aria-label="Breadcrumb">
+                            <ul class="breadcrumb justify-content-center py-0 bg-transparent">
+                                <li class="breadcrumb-item"><a href="/">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/html/category/">文章分类</a></li>
+                                <li class="breadcrumb-item active">正文</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="page-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                          				  				  				<div id="content_views" class="markdown_views prism-atom-one-dark"> <div class="toc"> <h3>文章目录</h3> <ul> <li><a href="#EurekaDashboardProperties_5" rel="nofollow">EurekaDashboardProperties（仪表盘配置）</a></li> <li><a href="#EurekaClientConfigBeanBean_13" rel="nofollow">EurekaClientConfigBean(客户端配置Bean)</a></li> <li><a href="#EurekaServerConfigBean_Bean_66" rel="nofollow">EurekaServerConfigBean (服务配置Bean)</a></li> </ul> </div> <hr/> <h1><a id="EurekaDashboardProperties_5" rel="nofollow"></a>EurekaDashboardProperties（仪表盘配置）</h1> <blockquote> <p>仪表盘即前端管理界面： 配置： eureka.dashboard.名称</p> </blockquote> <table> <thead> <tr> <th>名称</th> <th>默认值</th> <th>说明</th> </tr> </thead> <tbody> <tr> <td>path</td> <td>/</td> <td>访问仪表盘的路径</td> </tr> <tr> <td>enable</td> <td>true</td> <td>是否开启仪表盘</td> </tr> </tbody> </table> <h1><a id="EurekaClientConfigBeanBean_13" rel="nofollow"></a>EurekaClientConfigBean(客户端配置Bean)</h1> <blockquote> <ol> <li>配置前缀 eureka.client.</li> <li>详细参考：spring-cloud-netflix-eureka-client.jar下“META-INF/spring-configtion-metadata.json”</li> </ol> </blockquote> <table> <thead> <tr> <th>名称</th> <th>默认值</th> <th>说明</th> </tr> </thead> <tbody> <tr> <td>enabled</td> <td>true</td> <td>客户端是否已启用</td> </tr> <tr> <td>EurekaTransportConfig transport</td> <td>new CloudEurekaTransportConfig()</td> <td></td> </tr> <tr> <td>registryFetchIntervalSeconds</td> <td>30</td> <td>从Eureka服务端获取注册表间隔时间（秒）</td> </tr> <tr> <td>instanceInfoReplicationIntervalSeconds</td> <td>30</td> <td>实例信息复制到Eureka服务器间隔时间30（秒）</td> </tr> <tr> <td>initialInstanceInfoReplicationIntervalSeconds</td> <td>40</td> <td>初始化实例信息复制到Eureka服务器间隔时间（秒）</td> </tr> <tr> <td>eurekaServiceUrlPollIntervalSeconds</td> <td>300</td> <td>客户端循环Eureka服务器端URL间隔时间</td> </tr> <tr> <td>proxyPort</td> <td></td> <td>代理端口</td> </tr> <tr> <td>proxyHost</td> <td></td> <td>代理主机</td> </tr> <tr> <td>proxyUserName</td> <td></td> <td>代理用户名</td> </tr> <tr> <td>proxyPassword</td> <td></td> <td>代理密码</td> </tr> <tr> <td>eurekaServerReadTimeoutSeconds</td> <td>8</td> <td>读取Eureka服务端超时时间（秒）</td> </tr> <tr> <td>eurekaServerConnectTimeoutSeconds</td> <td>5</td> <td>连接Eureka服务端超时时间（秒）</td> </tr> <tr> <td>backupRegistryImpl</td> <td></td> <td>回退注册表信息实现，只有当Eureka客户端第一次启动有效</td> </tr> <tr> <td>eurekaServerTotalConnections</td> <td>200</td> <td>连接Eureka服务器端总连接数</td> </tr> <tr> <td>eurekaServerTotalConnectionsPerHost</td> <td>50</td> <td>连接Eureka服务器端主机总连接数</td> </tr> <tr> <td>eurekaServerURLContext</td> <td></td> <td>获取Eureka服务器端URL上下文，当URL列表来自DNS时需要设置。</td> </tr> <tr> <td>eurekaServerPort</td> <td></td> <td>Eureka服务端端口号</td> </tr> <tr> <td>eurekaServerDNSName</td> <td></td> <td>Eureka服务器端DNS名称，当需要开启DNS动态更新Eureka服务端URLS</td> </tr> <tr> <td>region</td> <td>“us-east-1”</td> <td>实例所在区域</td> </tr> <tr> <td>eurekaConnectionIdleTimeoutSeconds</td> <td>30</td> <td>Eureka连接空闲超时时间（秒），即HTTP在关闭之前可以保持空闲</td> </tr> <tr> <td>registryRefreshSingleVipAddress</td> <td></td> <td>刷新单个VIP地址注册表</td> </tr> <tr> <td>heartbeatExecutorThreadPoolSize</td> <td>2</td> <td>心跳执行器线程池大小</td> </tr> <tr> <td>heartbeatExecutorExponentialBackOffBound</td> <td>10</td> <td>心跳执行器指数回退边界，是重试延迟最大倍值。</td> </tr> <tr> <td>cacheRefreshExecutorThreadPoolSize</td> <td>2</td> <td>缓存刷新执行器线程池大小</td> </tr> <tr> <td>cacheRefreshExecutorExponentialBackOffBound</td> <td>10</td> <td>缓存刷新执行器指数回退边界，是重试延迟最大倍值。</td> </tr> <tr> <td>serviceUrl</td> <td>HashMap(String,String)</td> <td>服务器端URLMap</td> </tr> <tr> <td>gZipContent</td> <td>true</td> <td>开启gZip压缩内容</td> </tr> <tr> <td>useDnsForFetchingServiceUrls</td> <td>false</td> <td>使用DNS获取服务端URL列表</td> </tr> <tr> <td>registerWithEureka</td> <td>true</td> <td>注册实例到Eureka服务器端</td> </tr> <tr> <td>preferSameZoneEureka</td> <td>true</td> <td>首选同一区域Eureka服务</td> </tr> <tr> <td>logDeltaDiff</td> <td>false</td> <td>对数增量差异</td> </tr> <tr> <td>disableDelta</td> <td>false</td> <td>开启增量</td> </tr> <tr> <td>fetchRemoteRegionsRegistry</td> <td></td> <td>获取远程区域注册表</td> </tr> <tr> <td>availabilityZones</td> <td>HashMap(String,String)</td> <td>可用区域</td> </tr> <tr> <td>filterOnlyUpInstances</td> <td>true</td> <td>仅刷选UP实例</td> </tr> <tr> <td>fetchRegistry</td> <td>true</td> <td>获取注册表</td> </tr> <tr> <td>dollarReplacement</td> <td>_-</td> <td>替换美元号，在序列化和反序列化时</td> </tr> <tr> <td>escapeCharReplacement</td> <td>__</td> <td>转义字符替换，在序列化和反序列化时</td> </tr> <tr> <td>allowRedirects</td> <td>false</td> <td>允许重定向，即是否可重定向到从集群</td> </tr> <tr> <td>onDemandUpdateStatusChange</td> <td>true</td> <td>按需更新状态更改，本地状态更新触发远程注册或更新</td> </tr> <tr> <td>encoderName</td> <td>false</td> <td>编码器名称</td> </tr> <tr> <td>decoderName</td> <td>false</td> <td>解码器名称</td> </tr> <tr> <td>clientDataAccept</td> <td>EurekaAccept.full.name</td> <td>客户端数据接受</td> </tr> <tr> <td>shouldUnregisterOnShutdown</td> <td>ture</td> <td>实例下线时注销在Eureka服务器端的信息</td> </tr> <tr> <td>shouldEnforceRegistrationAtInit</td> <td>false</td> <td>在初始化时是否强制注册</td> </tr> <tr> <td>order</td> <td>0</td> <td>排序</td> </tr> </tbody> </table> <h1><a id="EurekaServerConfigBean_Bean_66" rel="nofollow"></a>EurekaServerConfigBean (服务配置Bean)</h1> <blockquote> <ol> <li>配置前缀 eureka.server.</li> <li>详细参考：spring-cloud-netflix-eureka-server.jar下“META-INF/spring-configtion-metadata.json”</li> </ol> </blockquote> <table> <thead> <tr> <th>名称</th> <th>默认值</th> <th>说明</th> </tr> </thead> <tbody> <tr> <td>aWSAccessId</td> <td></td> <td></td> </tr> <tr> <td>aWSSecretKey</td> <td></td> <td></td> </tr> <tr> <td>eIPBindRebindRetries</td> <td>3</td> <td>eIP 重试绑定次数</td> </tr> <tr> <td>eIPBindingRetryIntervalMs</td> <td>5 * MINUTES</td> <td>eIP重试绑定间隔时间（毫秒）</td> </tr> <tr> <td>eIPBindingRetryIntervalMsWhenUnbound</td> <td>1 * MINUTES</td> <td>eIP重试绑定时间间隔（毫秒）当未绑定时</td> </tr> <tr> <td>enableSelfPreservation</td> <td>true</td> <td>启用自我保护</td> </tr> <tr> <td>renewalPercentThreshold</td> <td>0.85</td> <td>续约百分比阀值</td> </tr> <tr> <td>renewalThresholdUpdateIntervalMs</td> <td>15 * MINUTES</td> <td>更新续约阀值间隔时间（毫秒）</td> </tr> <tr> <td>peerEurekaNodesUpdateIntervalMs</td> <td>10 * MINUTES</td> <td>对等Eureka节点更新间隔时间</td> </tr> <tr> <td>numberOfReplicationRetries</td> <td>5</td> <td>复制重试次数</td> </tr> <tr> <td>peerEurekaStatusRefreshTimeIntervalMs</td> <td>30 * 1000</td> <td>对等Eureka状态刷新时间间隔（毫秒）</td> </tr> <tr> <td>waitTimeInMsWhenSyncEmpty</td> <td>5 * MINUTES</td> <td>同步为空时的等待时间（毫秒</td> </tr> <tr> <td>peerNodeConnectTimeoutMs</td> <td>200</td> <td>对等节点连接超时时间（毫秒）</td> </tr> <tr> <td>peerNodeReadTimeoutMs</td> <td>200</td> <td>对等节点读取超时时间（毫秒）</td> </tr> <tr> <td>peerNodeTotalConnections</td> <td>1000</td> <td>对等节点总连接数</td> </tr> <tr> <td>peerNodeTotalConnectionsPerHost</td> <td>500</td> <td>对等节点主机总连接数</td> </tr> <tr> <td>peerNodeConnectionIdleTimeoutSeconds</td> <td>30</td> <td>对等节点连接空闲超时时间（秒）</td> </tr> <tr> <td>retentionTimeInMSInDeltaQueue</td> <td>3 * MINUTES</td> <td>增量队列中的保留时间（毫秒）</td> </tr> <tr> <td>deltaRetentionTimerIntervalInMs</td> <td>30 * 1000</td> <td>增量保留计时器间隔（毫秒）</td> </tr> <tr> <td>evictionIntervalTimerInMs</td> <td>60 * 1000</td> <td>去除计时器间隔时间（毫秒）</td> </tr> <tr> <td>aSGQueryTimeoutMs</td> <td>300</td> <td>aSG查询超时时间（毫秒）</td> </tr> <tr> <td>aSGUpdateIntervalMs</td> <td>5 * MINUTES</td> <td>aSG更新间隔时间（毫秒）</td> </tr> <tr> <td>aSGCacheExpiryTimeoutMs</td> <td>10 * MINUTES</td> <td>aSG缓存过期时间（毫秒）</td> </tr> <tr> <td>responseCacheAutoExpirationInSeconds</td> <td>180</td> <td>响应缓存自动过期时间（秒）</td> </tr> <tr> <td>responseCacheUpdateIntervalMs</td> <td>30 * 1000</td> <td>响应缓存更新时间时间（毫秒）</td> </tr> <tr> <td>useReadOnlyResponseCache</td> <td>true</td> <td>使用只读响应缓存</td> </tr> <tr> <td>disableDelta</td> <td>false</td> <td>禁用增量</td> </tr> <tr> <td>maxIdleThreadInMinutesAgeForStatusReplication</td> <td>10</td> <td>状态复制的最大空闲线程数（分钟）</td> </tr> <tr> <td>minThreadsForStatusReplication</td> <td>1</td> <td>状态复制的最小线程数</td> </tr> <tr> <td>maxThreadsForStatusReplication</td> <td>1</td> <td>状态复制的最大线程数</td> </tr> <tr> <td>maxElementsInStatusReplicationPool</td> <td>10000</td> <td>状态复制池中的最大元素数</td> </tr> <tr> <td>syncWhenTimestampDiffers</td> <td>true</td> <td>当时间戳不同时同步</td> </tr> <tr> <td>registrySyncRetries</td> <td>0</td> <td>注册表同步重试次数</td> </tr> <tr> <td>registrySyncRetryWaitMs</td> <td>30 * 1000</td> <td>注册表同步重试等待时间（毫秒）</td> </tr> <tr> <td>maxElementsInPeerReplicationPool</td> <td>10000</td> <td>对等复制池中的最大元素数</td> </tr> <tr> <td>maxIdleThreadAgeInMinutesForPeerReplication</td> <td>15</td> <td>对等复制的最大空闲线程时间（分钟）</td> </tr> <tr> <td>minThreadsForPeerReplication</td> <td>5</td> <td>对等复制最小线程数</td> </tr> <tr> <td>maxThreadsForPeerReplication</td> <td>20</td> <td>对等复制最大线程数</td> </tr> <tr> <td>maxTimeForReplication</td> <td>30000</td> <td>复制最长时间</td> </tr> <tr> <td>primeAwsReplicaConnections</td> <td>true</td> <td></td> </tr> <tr> <td>disableDeltaForRemoteRegions</td> <td>fasle</td> <td>禁用远程区域增量</td> </tr> <tr> <td>remoteRegionConnectTimeoutMs</td> <td>1000</td> <td>远程区域连接超时时间(毫秒)</td> </tr> <tr> <td>remoteRegionReadTimeoutMs</td> <td>1000</td> <td>远程区域读超时时间（毫秒）</td> </tr> <tr> <td>remoteRegionTotalConnections</td> <td>1000</td> <td>远程区域总连接数</td> </tr> <tr> <td>remoteRegionTotalConnectionsPerHost</td> <td>500</td> <td>远程区域主机总连接数</td> </tr> <tr> <td>remoteRegionConnectionIdleTimeoutSeconds</td> <td>30</td> <td>远程区域连接空闲超时时间（秒）</td> </tr> <tr> <td>gZipContentFromRemoteRegion</td> <td>true</td> <td>获取远程区域内容gZip压缩</td> </tr> <tr> <td>remoteRegionUrlsWithName</td> <td>Map&lt;String,String&gt;</td> <td>远程区域URL和名称</td> </tr> <tr> <td>remoteRegionUrls</td> <td>String[]</td> <td>远程区域URLS</td> </tr> <tr> <td>remoteRegionAppWhitelist</td> <td>HashMap&lt;String,Set&gt;</td> <td>远程区域APP白名单</td> </tr> <tr> <td>remoteRegionRegistryFetchInterval</td> <td>30</td> <td>远程区域注册表获取间隔时间</td> </tr> <tr> <td>remoteRegionFetchThreadPoolSize</td> <td>20</td> <td>远程区域获取线程池大小</td> </tr> <tr> <td>remoteRegionTrustStore</td> <td>“”</td> <td>远程区域信任存储</td> </tr> <tr> <td>remoteRegionTrustStorePassword</td> <td>“changeit”</td> <td>远程区域信任密码</td> </tr> <tr> <td>disableTransparentFallbackToOtherRegion</td> <td>false</td> <td>禁用透明回退到其他区域</td> </tr> <tr> <td>batchReplication</td> <td></td> <td>批量复制</td> </tr> <tr> <td>rateLimiterEnabled = false</td> <td>速率限制器是否启用</td> <td></td> </tr> <tr> <td>rateLimiterThrottleStandardClients</td> <td>false</td> <td>速率限制器节流标准客户端</td> </tr> <tr> <td>rateLimiterPrivilegedClients</td> <td>Collections.emptySet()</td> <td></td> </tr> <tr> <td>rateLimiterBurstSize</td> <td>10</td> <td>速率限制器并发大小</td> </tr> <tr> <td>rateLimiterRegistryFetchAverageRate</td> <td>500</td> <td>速率限制注册表获取平均速率</td> </tr> <tr> <td>rateLimiterFullFetchAverageRate</td> <td>100</td> <td>速率限制全取平均速率</td> </tr> <tr> <td>logIdentityHeaders</td> <td>true</td> <td>日志标识头</td> </tr> <tr> <td>listAutoScalingGroupsRoleName</td> <td>“ListAutoScalingGroups”</td> <td>列表自动缩放组角色名称</td> </tr> <tr> <td>enableReplicatedRequestCompression</td> <td>false</td> <td>启动复制请求压缩</td> </tr> <tr> <td>jsonCodecName</td> <td></td> <td>json编码器名称</td> </tr> <tr> <td>xmlCodecName</td> <td></td> <td>xml编码器名称</td> </tr> <tr> <td>route53BindRebindRetries</td> <td>3</td> <td></td> </tr> <tr> <td>route53BindingRetryIntervalMs</td> <td>5 * MINUTES</td> <td></td> </tr> <tr> <td>route53DomainTTL</td> <td>30</td> <td></td> </tr> <tr> <td>bindingStrategy</td> <td>AwsBindingStrategy.EIP</td> <td></td> </tr> <tr> <td>minAvailableInstancesForPeerReplication</td> <td>-1</td> <td>对等复制的最小可用实例数</td> </tr> <tr> <td>initialCapacityOfResponseCache</td> <td>1000</td> <td>响应缓存的初始容量</td> </tr> <tr> <td>expectedClientRenewalIntervalSeconds</td> <td>30</td> <td>预期客户端续订间隔时间（秒）</td> </tr> <tr> <td>useAwsAsgApi</td> <td>true</td> <td>使用AwsAsgApi</td> </tr> <tr> <td>myUrl</td> <td></td> <td></td> </tr> </tbody> </table> </div> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-1679.htm">vue实现无限消息无缝滚动_vue.js</a></p>
+                                                        <p>下一个：<a href="/html/category/article-1681.htm">这几种方法帮你快速实现回到页面顶部</a></p>
+                                                    </div>
+                                            </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/html/category/article-1887.htm" title="Vue.Draggable 文档总结">Vue.Draggable 文档总结</a></li>
+                        <li class="py-2"><a href="/html/category/article-1866.htm" title="100ms的SQL把服务器搞崩溃了_在线工具">100ms的SQL把服务器搞崩溃了_在线工具</a></li>
+                        <li class="py-2"><a href="/html/category/article-1904.htm" title="在Python中使用ibis,impyla,pyhive,pyspark连接Kerberos安全认证的Hive、Impala">在Python中使用ibis,impyla,pyhive,pyspark连接Kerberos安全认证的Hive、Impala</a></li>
+                        <li class="py-2"><a href="/html/category/article-1895.htm" title="Vue 学习  之 封装模块方法">Vue 学习  之 封装模块方法</a></li>
+                        <li class="py-2"><a href="/html/category/article-1855.htm" title="K8S 中的pod 和 node 区别">K8S 中的pod 和 node 区别</a></li>
+                        <li class="py-2"><a href="/html/category/article-1891.htm" title="八大基本数据类型及数据类型之间的转换&#8212;zixiao">八大基本数据类型及数据类型之间的转换&#8212;zixiao</a></li>
+                        <li class="py-2"><a href="/html/category/article-1875.htm" title="No version of NDK matched the requested version 21.1.6113669. Versions available locally: 23.1.77796">No version of NDK matched the requested version 21.1.6113669. Versions available locally: 23.1.77796</a></li>
+                        <li class="py-2"><a href="/html/category/article-1873.htm" title="mysql用哪种时间_mysql存储日期使用什么类型">mysql用哪种时间_mysql存储日期使用什么类型</a></li>
+                        <li class="py-2"><a href="/html/category/article-1890.htm" title="解决Redis并发带来的雪崩，击穿和穿透问题，以及搭建一个Redis伪集群">解决Redis并发带来的雪崩，击穿和穿透问题，以及搭建一个Redis伪集群</a></li>
+                        <li class="py-2"><a href="/html/category/article-1882.htm" title="yum安装nginx后报错nginx: [error] open() “/run/nginx.pid“ failed">yum安装nginx后报错nginx: [error] open() “/run/nginx.pid“ failed</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">36</span> <a href="/html/date/2024-06/" title="2024-06 归档">2024-06</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-05/" title="2024-05 归档">2024-05</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">60</span> <a href="/html/date/2024-04/" title="2024-04 归档">2024-04</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-03/" title="2024-03 归档">2024-03</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">50</span> <a href="/html/date/2024-02/" title="2024-02 归档">2024-02</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+
+
+                    </div>
+                </div>
+            </div> <!-- .container -->
+        </div> <!-- .page-section -->
+    </main>
+        <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 py-2">
+                    <p id="copyright">
+                        Afghanistan Address 版权所有 Powered by WordPress
+                    </p>
+                </div>
+                <div class="col-sm-6 py-2 text-right">
+                    <div class="d-inline-block px-3">
+                        <a href="#">Privacy</a>
+                    </div>
+                    <div class="d-inline-block px-3">
+                        <a href="#">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .container -->
+    </footer> <!-- .page-footer -->
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/jquery-3.5.1.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/bootstrap.bundle.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/wow/wow.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/js/owl.carousel.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/waypoints/jquery.waypoints.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/animateNumber/jquery.animateNumber.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/google-maps.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/theme.js"></script>
+    <script>
+    $(function() {
+        $('.js_to').click(function(){
+            var url = $(this).data('url');
+            var code = $(this).data('code');
+            url += code;
+
+            window.open(url);
+        })
+    });
+    </script>
+</body>
+
+</html>
