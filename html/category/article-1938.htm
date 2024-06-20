@@ -2,11 +2,11 @@
 <html lang="zh-CN">
 
 <head>
-        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1765.htm" />
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1938.htm" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Mysql模糊查询区分大小写 - Afghanistan Address</title>
+    <title>JavaScript数字数组的均等分割方法详解 - Afghanistan Address</title>
         <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
     <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
             <div class="page-banner">
                 <div class="row justify-content-center align-items-center h-100">
                     <div class="col-md-10">
-                        <h1 class="text-center">Mysql模糊查询区分大小写</h1>
+                        <h1 class="text-center">JavaScript数字数组的均等分割方法详解</h1>
                         <nav aria-label="Breadcrumb">
                             <ul class="breadcrumb justify-content-center py-0 bg-transparent">
                                 <li class="breadcrumb-item"><a href="/">首页</a></li>
@@ -76,10 +76,28 @@ var _hmt = _hmt || [];
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
-                          				  				  				<div id="content_views" class="markdown_views prism-atom-one-dark"> <h2><a id="like_0" rel="nofollow"></a>使用like查询发现不能区分大小写</h2> <h3><a id="_3" rel="nofollow"></a>解决方法</h3> <p>问题出现在COLLATE的设置上，将排序规则设置为<em>utf8mb4_bin</em>即可解决问题<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220902/f2dfd423df413725bd837ea4e57226b2.jpg" alt="Mysql模糊查询区分大小写"></p> <h3><a id="COLLATE_7" rel="nofollow"></a>COLLATE介绍</h3> <p>详情参考：<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://cloud.tencent.com/developer/article/1366841?fromSource=waitui"  rel="nofollow">COLLATE</a></p> </div> 			                        <div class="col-md-12 mt-5">
-                                                        <p>上一个：<a href="/html/category/article-1764.htm">android 自定义单指旋转转盘 二（类似抽奖转盘）</a></p>
-                                                        <p>下一个：<a href="/html/category/article-1766.htm">springboot数据导出</a></p>
+                          				  				  				<p>如果我们可以将一个数组分为一个元素和其余元素，则我们需要编写一个返回true的函数，以使该一个元素等于除自身之外的所有其他元素的乘积，否则返回false。</p> <p>例如：如果数组是-</p> <pre>const&nbsp;arr&nbsp;=&nbsp;[1,&nbsp;56,&nbsp;2,&nbsp;4,&nbsp;7];</pre> <p>那么输出应该为真</p> <p>因为56等于-</p> <pre>2&nbsp;*&nbsp;4&nbsp;*&nbsp;7&nbsp;*&nbsp;1</pre> <h2>示例</h2> <p>以下是代码-</p> <pre>const&nbsp;arr&nbsp;=&nbsp;[1,&nbsp;56,&nbsp;2,&nbsp;4,&nbsp;7]; const&nbsp;isEqualPartition&nbsp;=&nbsp;arr&nbsp;=&gt;&nbsp;{ &nbsp;&nbsp;&nbsp;const&nbsp;creds&nbsp;=&nbsp;arr.reduce((acc,&nbsp;val)&nbsp;=&gt;&nbsp;{ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;{&nbsp;prod,&nbsp;max&nbsp;}&nbsp;=&nbsp;acc; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(val&nbsp;&gt;&nbsp;max&nbsp;||&nbsp;!max){ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prod&nbsp;*=&nbsp;(max&nbsp;||&nbsp;1); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max&nbsp;=&nbsp;val; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}else{ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prod&nbsp;*=&nbsp;val; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;{&nbsp;prod,&nbsp;max&nbsp;}; &nbsp;&nbsp;&nbsp;},&nbsp;{ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prod:&nbsp;1, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max:&nbsp;null &nbsp;&nbsp;&nbsp;}); &nbsp;&nbsp;&nbsp;return&nbsp;creds.max&nbsp;===&nbsp;creds.prod; }; console.log(isEqualPartition(arr));</pre> <p>输出结果</p> <p>以下是控制台中的输出-</p> <pre>true</pre> <div></div> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-1937.htm">VScode离线安装插件的方法</a></p>
                                                     </div>
+                                                <div class="panel panel-default mt-5">
+                            <div class="panel-heading">
+                                <h3 class="m-0">推荐文章</h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="p-0 x-0">
+                                                                        <li class="py-2"><a href="/html/category/article-1893.htm">JavaScript中querySelector和getElementByld(getXXXBy XX)的区别</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1888.htm">pandas 分批读取大量数据</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1872.htm">python数据可视化-matplotlib入门(5)-饼图和堆叠图</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1867.htm">C ++ STL中的list_remove()和list remove_if()</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1774.htm">眼见不一定为实：调用链HBase倾斜修复</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1749.htm">RenderDoc图形调试器详细使用教程(基于DirectX11)</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1736.htm">使用SpringBoot配置多数据源的经验分享_java</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1722.htm">Kafka 认证三：添加 Kerberos 认证详细流程</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1714.htm">PHP中使用if的时候为什么建议将常量放在前面？</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1669.htm">关于springboot项目中及mysql中Date、datetime、timestamp类型的相关说明</a></li>
+                                                                    </ul>
+                            </div>
+                        </div>
                                             </div>
                     <div class="col-md-3">
                         <div class="panel panel-default">
@@ -88,16 +106,16 @@ var _hmt = _hmt || [];
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/html/category/article-1899.htm" title="Azure DevOps通过SSH部署上传到服务器的应用">Azure DevOps通过SSH部署上传到服务器的应用</a></li>
-                        <li class="py-2"><a href="/html/category/article-1888.htm" title="pandas 分批读取大量数据">pandas 分批读取大量数据</a></li>
-                        <li class="py-2"><a href="/html/category/article-1937.htm" title="VScode离线安装插件的方法">VScode离线安装插件的方法</a></li>
+                        <li class="py-2"><a href="/html/category/article-1855.htm" title="K8S 中的pod 和 node 区别">K8S 中的pod 和 node 区别</a></li>
+                        <li class="py-2"><a href="/html/category/article-1873.htm" title="mysql用哪种时间_mysql存储日期使用什么类型">mysql用哪种时间_mysql存储日期使用什么类型</a></li>
+                        <li class="py-2"><a href="/html/category/article-1864.htm" title="springboot基础(6):整合ActiveMQ">springboot基础(6):整合ActiveMQ</a></li>
+                        <li class="py-2"><a href="/html/category/article-1905.htm" title="python中time.strftime不支持中文，报错UnicodeEncodeError: &#8216;locale&#8217; codec can&#8217;t encode character &#8216;\u5e74&#8217; in po&#8230;">python中time.strftime不支持中文，报错UnicodeEncodeError: &#8216;locale&#8217; codec can&#8217;t encode character &#8216;\u5e74&#8217; in po&#8230;</a></li>
+                        <li class="py-2"><a href="/html/category/article-1896.htm" title="一、重写了equals为什么还要重写hashcode">一、重写了equals为什么还要重写hashcode</a></li>
+                        <li class="py-2"><a href="/html/category/article-1908.htm" title="mysql错误解决方案">mysql错误解决方案</a></li>
+                        <li class="py-2"><a href="/html/category/article-1867.htm" title="C ++ STL中的list_remove()和list remove_if()">C ++ STL中的list_remove()和list remove_if()</a></li>
                         <li class="py-2"><a href="/html/category/article-1858.htm" title="Vue实现评论功能">Vue实现评论功能</a></li>
-                        <li class="py-2"><a href="/html/category/article-1883.htm" title="C#实现文件Move和Copy操作_C#教程_">C#实现文件Move和Copy操作_C#教程_</a></li>
-                        <li class="py-2"><a href="/html/category/article-1870.htm" title="SpringBoot 简洁明了将导入Excel到数据库">SpringBoot 简洁明了将导入Excel到数据库</a></li>
-                        <li class="py-2"><a href="/html/category/article-1863.htm" title="为vscode开发一款svn右键菜单扩展">为vscode开发一款svn右键菜单扩展</a></li>
-                        <li class="py-2"><a href="/html/category/article-1898.htm" title="Kotlin 标准函数和静态方法[第一行代码 Kotlin 学习笔记]">Kotlin 标准函数和静态方法[第一行代码 Kotlin 学习笔记]</a></li>
-                        <li class="py-2"><a href="/html/category/article-1869.htm" title="Python 一网打尽＜排序算法＞之从希尔排序算法的分治哲学开始">Python 一网打尽＜排序算法＞之从希尔排序算法的分治哲学开始</a></li>
-                        <li class="py-2"><a href="/html/category/article-1909.htm" title="Redis的高并发是如何支持的">Redis的高并发是如何支持的</a></li>
+                        <li class="py-2"><a href="/html/category/article-1871.htm" title="Git基础Git创建本地版本库详解">Git基础Git创建本地版本库详解</a></li>
+                        <li class="py-2"><a href="/html/category/article-1899.htm" title="Azure DevOps通过SSH部署上传到服务器的应用">Azure DevOps通过SSH部署上传到服务器的应用</a></li>
                     </ul>
     </div>
 </div>
