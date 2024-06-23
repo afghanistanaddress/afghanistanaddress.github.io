@@ -2,11 +2,11 @@
 <html lang="zh-CN">
 
 <head>
-        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1937.htm" />
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-2251.htm" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>VScode离线安装插件的方法 - Afghanistan Address</title>
+    <title>Spring动态代理中有什么方法不会被代理探究 - Afghanistan Address</title>
         <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
     <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
             <div class="page-banner">
                 <div class="row justify-content-center align-items-center h-100">
                     <div class="col-md-10">
-                        <h1 class="text-center">VScode离线安装插件的方法</h1>
+                        <h1 class="text-center">Spring动态代理中有什么方法不会被代理探究</h1>
                         <nav aria-label="Breadcrumb">
                             <ul class="breadcrumb justify-content-center py-0 bg-transparent">
                                 <li class="breadcrumb-item"><a href="/">首页</a></li>
@@ -76,9 +76,9 @@ var _hmt = _hmt || [];
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
-                          				  				  				<div id="content_views" class="markdown_views prism-atom-one-dark"> <p>1、进入vscode插件官网（https://marketplace.visualstudio.com/）</p> <p>2、搜索找到需要安装的插件<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220607/5ffc2638b92219c661d3725e2f57db43.jpg" alt="VScode离线安装插件的方法"><br /> 点进入插件界面，点击“Download Extension”下载；</p> <p>3、使用vscode进行安装<br /> 打开vscode，到拓展中，点击三个小点，“从VSIX安装”，选择下载的.vsix文件安装即可。成功后重启软件。<br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220607/05831b0873470ce23f7cbc4be5d71b54.jpg" alt="VScode离线安装插件的方法"><br /> 4、有的插件安装对vscode版本有要求，需要下载安装高版本的vscode；</p> <p>5、离线下载的cpptools（C/C++）插件安装不生效或有依赖的安装包无法下载，可以选择去下载完整的安装包；<br /> https://github.com/Microsoft/vscode-cpptools/releases.</p> </div> 			                        <div class="col-md-12 mt-5">
-                                                        <p>上一个：<a href="/html/category/article-1924.htm">js制作简易秒表效果详细讲解、开始、暂停与结束（定时器制作和时间戳制作）</a></p>
-                                                        <p>下一个：<a href="/html/category/article-1938.htm">JavaScript数字数组的均等分割方法详解</a></p>
+                          				  				  				<div id="content_views" class="markdown_views prism-atom-one-dark"> <p>JDK代理中 <br /> 会代理对象中的所有方法，对于Object中继承的方法，会代理toString方法，但是不会代理equals，hashCode，getClass方法。 <br /> 原因在于在Spring中的JdkDynamicAopProxy类中的invoke方法执行时会判断</p> <pre class="prettyprint"><code class="hljs oxygene"> <span class="hljs-keyword">if</span> ((!this.equalsDefined) &amp;&amp; (AopUtils.isEqualsMethod(<span class="hljs-function"><span class="hljs-keyword">method</span>)))       <span class="hljs-comment">{         return Boolean.valueOf(equals(args[0]));       }</span>       <span class="hljs-title">if</span> <span class="hljs-params">((!this.hashCodeDefined)</span> &amp;&amp; <span class="hljs-params">(AopUtils.isHashCodeMethod(<span class="hljs-keyword">method</span>)</span>))       <span class="hljs-comment">{         return Integer.valueOf(hashCode());       }</span>       <span class="hljs-title">if</span> <span class="hljs-params">((!this.advised.opaque)</span> &amp;&amp; <span class="hljs-params">(<span class="hljs-keyword">method</span>.getDeclaringClass()</span>.<span class="hljs-title">isInterface</span><span class="hljs-params">()</span>) &amp;&amp;          <span class="hljs-params">(<span class="hljs-keyword">method</span>         .getDeclaringClass()</span>.<span class="hljs-title">isAssignableFrom</span><span class="hljs-params">(Advised.<span class="hljs-keyword">class</span>)</span>))       <span class="hljs-comment">{         return AopUtils.invokeJoinpointUsingReflection(this.advised, method, args);       }</span></span></code></pre> <p>所以在调用这三个方法时并不会被代理。</p> <p>CGLIB代理 <br /> 与JDK类似，都会进行方法判断，但是该代理的运行方式还不理解，判断方法在本类中并没有使用。应该是在别的类中调用，并根据返回值判断是否代理</p> <pre class="prettyprint"><code class="hljs oxygene"> <span class="hljs-keyword">if</span> (AopUtils.isFinalizeMethod(<span class="hljs-function"><span class="hljs-keyword">method</span>)) <span class="hljs-comment">{         CglibAopProxy.logger.debug("Found finalize() method - using NO_OVERRIDE");         return 2;       }</span>       <span class="hljs-title">if</span> <span class="hljs-params">((!this.advised.isOpaque()</span>) &amp;&amp; <span class="hljs-params">(<span class="hljs-keyword">method</span>.getDeclaringClass()</span>.<span class="hljs-title">isInterface</span><span class="hljs-params">()</span>) &amp;&amp;          <span class="hljs-params">(<span class="hljs-keyword">method</span>         .getDeclaringClass()</span>.<span class="hljs-title">isAssignableFrom</span><span class="hljs-params">(Advised.<span class="hljs-keyword">class</span>)</span>)) <span class="hljs-comment">{         if (CglibAopProxy.logger.isDebugEnabled()) {           CglibAopProxy.logger.debug("Method is declared on Advised interface: " + method);         }</span>         <span class="hljs-title">return</span> 4;</span>       }        <span class="hljs-keyword">if</span> (AopUtils.isEqualsMethod(<span class="hljs-function"><span class="hljs-keyword">method</span>)) <span class="hljs-comment">{         CglibAopProxy.logger.debug("Found 'equals' method: " + method);         return 5;       }</span>        <span class="hljs-title">if</span> <span class="hljs-params">(AopUtils.isHashCodeMethod(<span class="hljs-keyword">method</span>)</span>) <span class="hljs-comment">{         CglibAopProxy.logger.debug("Found 'hashCode' method: " + method);         return 6;</span></span></code></pre> <p>还有很多不理解，以后如果有更深理解，会更新的</p> </p></div> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-1966.htm">JavaScript如何将数组与值是数组的对象合并方法详解</a></p>
+                                                        <p>下一个：<a href="/html/category/article-2252.htm">python向hive插入数据遇到的坑</a></p>
                                                     </div>
                                                 <div class="panel panel-default mt-5">
                             <div class="panel-heading">
@@ -86,16 +86,16 @@ var _hmt = _hmt || [];
                             </div>
                             <div class="panel-body">
                                 <ul class="p-0 x-0">
-                                                                        <li class="py-2"><a href="/html/category/article-1882.htm">yum安装nginx后报错nginx: [error] open() “/run/nginx.pid“ failed</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1937.htm">VScode离线安装插件的方法</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1890.htm">解决Redis并发带来的雪崩，击穿和穿透问题，以及搭建一个Redis伪集群</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1875.htm">No version of NDK matched the requested version 21.1.6113669. Versions available locally: 23.1.77796</a></li>
                                                                         <li class="py-2"><a href="/html/category/article-1868.htm">spring-kafka @KafkaListener详解与使用</a></li>
-                                                                        <li class="py-2"><a href="/html/category/article-1852.htm">mysql 时间戳定义_mysql之TIMESTAMP（时间戳）用法详解</a></li>
-                                                                        <li class="py-2"><a href="/html/category/article-1832.htm">win11系统如何添加pdf虚拟打印机</a></li>
-                                                                        <li class="py-2"><a href="/html/category/article-1804.htm">VMware安装Ubuntu20（图文教程，超详细）_在线工具</a></li>
-                                                                        <li class="py-2"><a href="/html/category/article-1790.htm">数据结构详解·一树的初步</a></li>
-                                                                        <li class="py-2"><a href="/html/category/article-1723.htm">springboot读取resources下文件方式</a></li>
-                                                                        <li class="py-2"><a href="/html/category/article-1700.htm">Python 查找算法_众里寻他千百度，蓦然回首那人却在灯火阑珊处（线性、二分，分块、插值查找算法)</a></li>
-                                                                        <li class="py-2"><a href="/html/category/article-1698.htm">关于Java 信号量 Semaphore</a></li>
-                                                                        <li class="py-2"><a href="/html/category/article-1644.htm">教你在 Java 中实现 Dijkstra 最短路算法的方法_java</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1805.htm">【异常报错】com.rabbitmq.client.ShutdownSignalException: channel error； protocol method: #method＜channel.c</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1802.htm">JAVA 实现websocket作为客户端（自动断线重连）</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1760.htm">Vue3知识点整理 常用Composition API（3）- 生命周期、自定义hook、toRef</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1759.htm">Springboot使用@JsonSerialize和@JsonDeserialize</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1691.htm">python+pytest接口自动化(13)-token关联登录</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1654.htm">解决Qt设置QTextEdit行高的问题_C 语言</a></li>
                                                                     </ul>
                             </div>
                         </div>
@@ -107,16 +107,16 @@ var _hmt = _hmt || [];
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/html/category/article-1874.htm" title="Vue中的插槽">Vue中的插槽</a></li>
                         <li class="py-2"><a href="/html/category/article-1862.htm" title="将无效字符串作为参数传递给STR_TO_DATE()函数时，MySQL将返回什么？">将无效字符串作为参数传递给STR_TO_DATE()函数时，MySQL将返回什么？</a></li>
+                        <li class="py-2"><a href="/html/category/article-1924.htm" title="js制作简易秒表效果详细讲解、开始、暂停与结束（定时器制作和时间戳制作）">js制作简易秒表效果详细讲解、开始、暂停与结束（定时器制作和时间戳制作）</a></li>
                         <li class="py-2"><a href="/html/category/article-1910.htm" title="[转载] Python中format函数用法">[转载] Python中format函数用法</a></li>
+                        <li class="py-2"><a href="/html/category/article-1878.htm" title="echart整体图形大小调整">echart整体图形大小调整</a></li>
+                        <li class="py-2"><a href="/html/category/article-2251.htm" title="Spring动态代理中有什么方法不会被代理探究">Spring动态代理中有什么方法不会被代理探究</a></li>
+                        <li class="py-2"><a href="/html/category/article-2252.htm" title="python向hive插入数据遇到的坑">python向hive插入数据遇到的坑</a></li>
+                        <li class="py-2"><a href="/html/category/article-1966.htm" title="JavaScript如何将数组与值是数组的对象合并方法详解">JavaScript如何将数组与值是数组的对象合并方法详解</a></li>
+                        <li class="py-2"><a href="/html/category/article-1893.htm" title="JavaScript中querySelector和getElementByld(getXXXBy XX)的区别">JavaScript中querySelector和getElementByld(getXXXBy XX)的区别</a></li>
                         <li class="py-2"><a href="/html/category/article-1880.htm" title="React&#8217;s mouseEvent doesn&#8217;t have offsetX/offsetY">React&#8217;s mouseEvent doesn&#8217;t have offsetX/offsetY</a></li>
-                        <li class="py-2"><a href="/html/category/article-1883.htm" title="C#实现文件Move和Copy操作_C#教程_">C#实现文件Move和Copy操作_C#教程_</a></li>
-                        <li class="py-2"><a href="/html/category/article-1872.htm" title="python数据可视化-matplotlib入门(5)-饼图和堆叠图">python数据可视化-matplotlib入门(5)-饼图和堆叠图</a></li>
-                        <li class="py-2"><a href="/html/category/article-1884.htm" title="Springboot：拦截器和过滤器">Springboot：拦截器和过滤器</a></li>
-                        <li class="py-2"><a href="/html/category/article-1908.htm" title="mysql错误解决方案">mysql错误解决方案</a></li>
-                        <li class="py-2"><a href="/html/category/article-1900.htm" title="网页盒子水平布局方式">网页盒子水平布局方式</a></li>
-                        <li class="py-2"><a href="/html/category/article-1894.htm" title="小程序自定义导航栏组件">小程序自定义导航栏组件</a></li>
+                        <li class="py-2"><a href="/html/category/article-1888.htm" title="pandas 分批读取大量数据">pandas 分批读取大量数据</a></li>
                     </ul>
     </div>
 </div>

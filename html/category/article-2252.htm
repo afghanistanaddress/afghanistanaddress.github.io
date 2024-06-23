@@ -2,11 +2,11 @@
 <html lang="zh-CN">
 
 <head>
-        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1668.htm" />
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-2252.htm" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>为什么在MySQL中使用两位数年份的日期值不是一个好习惯？ - Afghanistan Address</title>
+    <title>python向hive插入数据遇到的坑 - Afghanistan Address</title>
         <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
     <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
             <div class="page-banner">
                 <div class="row justify-content-center align-items-center h-100">
                     <div class="col-md-10">
-                        <h1 class="text-center">为什么在MySQL中使用两位数年份的日期值不是一个好习惯？</h1>
+                        <h1 class="text-center">python向hive插入数据遇到的坑</h1>
                         <nav aria-label="Breadcrumb">
                             <ul class="breadcrumb justify-content-center py-0 bg-transparent">
                                 <li class="breadcrumb-item"><a href="/">首页</a></li>
@@ -76,10 +76,28 @@ var _hmt = _hmt || [];
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
-                          				  				  				<p>YEAR(2)以2位数格式存储一年。例如，我们可以写69来存储1969。在年份(2)中，可以将年份指定为1970到2069（70到69）。</p> <p>MySQL借助以下规则来解释两位数的年份值-</p> <ul class="list-paddingleft-2"> <li> <p>00-69范围内的年份值将转换为2000-2069。</p> </li> <li> <p>&nbsp;70-99范围内的年份值转换为1970-1999。</p> </li> </ul> <p>我们不能将日期值存储为两位数格式，因为随着世纪的来临，以这种格式存储的值变得模糊。</p> <p>通过以下MySQL示例可以更清楚地理解-</p> <pre>mysql&gt;&nbsp;Create&nbsp;Table&nbsp;year_test(val&nbsp;year(2));  mysql&gt;&nbsp;insert&nbsp;into&nbsp;year_test(val)&nbsp;values('70');  mysql&gt;&nbsp;insert&nbsp;into&nbsp;year_test(val)&nbsp;values('00');  mysql&gt;&nbsp;select&nbsp;*&nbsp;from&nbsp;year_test; +-----+ |&nbsp;val&nbsp;| +-----+ |&nbsp;70&nbsp;&nbsp;| |&nbsp;00&nbsp;&nbsp;| +-----+ 2&nbsp;rows&nbsp;in&nbsp;set&nbsp;(0.00&nbsp;sec)  mysql&gt;&nbsp;select&nbsp;*&nbsp;from&nbsp;year_test&nbsp;where&nbsp;val&nbsp;=&nbsp;'1970'; +-----+ |&nbsp;val&nbsp;| +-----+ |&nbsp;70&nbsp;&nbsp;| +-----+ 1&nbsp;row&nbsp;in&nbsp;set&nbsp;(0.03&nbsp;sec)  mysql&gt;&nbsp;select&nbsp;*&nbsp;from&nbsp;year_test&nbsp;where&nbsp;val&nbsp;=&nbsp;'2000'; +-----+ |&nbsp;val&nbsp;| +-----+ |&nbsp;00&nbsp;&nbsp;| +-----+ 1&nbsp;row&nbsp;in&nbsp;set&nbsp;(0.00&nbsp;sec)  mysql&gt;&nbsp;select&nbsp;*&nbsp;from&nbsp;year_test&nbsp;where&nbsp;val&nbsp;=&nbsp;'1900'; Empty&nbsp;set&nbsp;(0.06&nbsp;sec)</pre> <p>通过将00存储为“ val”，我们不确定是哪一年表示“ 1900”或“ 2000”。MySQL将其解释为2000年。</p> <div></div> 			                        <div class="col-md-12 mt-5">
-                                                        <p>上一个：<a href="/html/category/article-1667.htm">springboot 定义统一返回结果</a></p>
-                                                        <p>下一个：<a href="/html/category/article-1669.htm">关于springboot项目中及mysql中Date、datetime、timestamp类型的相关说明</a></p>
+                          				  				  				<div id="content_views" class="markdown_views prism-atom-one-dark"> <div class="toc"> <h3>大数据体系</h3> <ul> <li><a href="#pythonhive_2" rel="nofollow">python向hive插入数据遇到的坑</a></li> </ul> </div> <h1> <a id="pythonhive_2" rel="nofollow"></a>python向hive插入数据遇到的坑</h1> <p>因项目需求，应用python建模需要通过hive取数，并将结果写入hive表。<br /> 尝试了以下几条坑爹路，仅做记录如下：</p> <ol> <li> <p>通过impyla库搭建hive与python桥梁<br /> 1.1 环境配置的坑（回头放连接）<br /> 注: 远程访问hive一定要记得配置账号密码！！！报错：。。。-4.。。<br /> 1.2 一定不要用impyla中的executemany去批量插入数据，也不要用其他的方式向hive插入数据，都是坑！奇慢无比！找资料也都是说不建议这么做。</p> </li> <li> <p>长途跋涉hdfs法<br /> 2.1 先用python的pyhdfs库将结果写成hdfs文件，然后。。。尼玛！！根本没成功连上服务器的hdfs，本地hdfs到是可以的<br /> 2.2 那既然写hdfs，我就直接将模型结果通过hadoop/hdfs命令上传至hdfs。然后， 通过hive命令load data将hdfs中的结果再导入hive。虽然有点绕，但是成功了！！！BUT！！！小兄弟，这个直接操作HDFS风险太高了，要不你还是另寻他法吧，不可以拒绝哦！！！<br /> 2.3 好吧，根据建议，使用kafka，抱歉这个坑后面再来踩。<br /> 2.4 临时处理方案：先将结果写入mysql，再转入hive，这个没有坑，具体我也只是写到mysql，无坑。。就是有点绕。。。</p> </li> </ol> </div> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-2251.htm">Spring动态代理中有什么方法不会被代理探究</a></p>
                                                     </div>
+                                                <div class="panel panel-default mt-5">
+                            <div class="panel-heading">
+                                <h3 class="m-0">推荐文章</h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="p-0 x-0">
+                                                                        <li class="py-2"><a href="/html/category/article-1908.htm">mysql错误解决方案</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1894.htm">小程序自定义导航栏组件</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1888.htm">pandas 分批读取大量数据</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1886.htm">TensorFlow运行出错：UnicodeEncodeError: &#8216;utf-8&#8217; codec can&#8217;t encode character &#8216;\udcce&#8217; in position 2559: s</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1822.htm">C3P0反序列化链学习</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1764.htm">android 自定义单指旋转转盘 二（类似抽奖转盘）</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1697.htm">这些OAuth2客户端的认证方式你未必了解</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1694.htm">Spring MVC启动原理详解</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1676.htm">使用Python在D天内运送包裹的能力</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1644.htm">教你在 Java 中实现 Dijkstra 最短路算法的方法_java</a></li>
+                                                                    </ul>
+                            </div>
+                        </div>
                                             </div>
                     <div class="col-md-3">
                         <div class="panel panel-default">
@@ -88,16 +106,16 @@ var _hmt = _hmt || [];
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/html/category/article-1904.htm" title="在Python中使用ibis,impyla,pyhive,pyspark连接Kerberos安全认证的Hive、Impala">在Python中使用ibis,impyla,pyhive,pyspark连接Kerberos安全认证的Hive、Impala</a></li>
-                        <li class="py-2"><a href="/html/category/article-1937.htm" title="VScode离线安装插件的方法">VScode离线安装插件的方法</a></li>
-                        <li class="py-2"><a href="/html/category/article-1924.htm" title="js制作简易秒表效果详细讲解、开始、暂停与结束（定时器制作和时间戳制作）">js制作简易秒表效果详细讲解、开始、暂停与结束（定时器制作和时间戳制作）</a></li>
-                        <li class="py-2"><a href="/html/category/article-1876.htm" title="python入门基础字典及相关操作详解">python入门基础字典及相关操作详解</a></li>
-                        <li class="py-2"><a href="/html/category/article-1887.htm" title="Vue.Draggable 文档总结">Vue.Draggable 文档总结</a></li>
+                        <li class="py-2"><a href="/html/category/article-1906.htm" title="Java Random随机数">Java Random随机数</a></li>
                         <li class="py-2"><a href="/html/category/article-1909.htm" title="Redis的高并发是如何支持的">Redis的高并发是如何支持的</a></li>
-                        <li class="py-2"><a href="/html/category/article-1870.htm" title="SpringBoot 简洁明了将导入Excel到数据库">SpringBoot 简洁明了将导入Excel到数据库</a></li>
-                        <li class="py-2"><a href="/html/category/article-1910.htm" title="[转载] Python中format函数用法">[转载] Python中format函数用法</a></li>
-                        <li class="py-2"><a href="/html/category/article-1874.htm" title="Vue中的插槽">Vue中的插槽</a></li>
-                        <li class="py-2"><a href="/html/category/article-1965.htm" title="设置网页脚本动态顺序加载">设置网页脚本动态顺序加载</a></li>
+                        <li class="py-2"><a href="/html/category/article-1862.htm" title="将无效字符串作为参数传递给STR_TO_DATE()函数时，MySQL将返回什么？">将无效字符串作为参数传递给STR_TO_DATE()函数时，MySQL将返回什么？</a></li>
+                        <li class="py-2"><a href="/html/category/article-2252.htm" title="python向hive插入数据遇到的坑">python向hive插入数据遇到的坑</a></li>
+                        <li class="py-2"><a href="/html/category/article-1867.htm" title="C ++ STL中的list_remove()和list remove_if()">C ++ STL中的list_remove()和list remove_if()</a></li>
+                        <li class="py-2"><a href="/html/category/article-1875.htm" title="No version of NDK matched the requested version 21.1.6113669. Versions available locally: 23.1.77796">No version of NDK matched the requested version 21.1.6113669. Versions available locally: 23.1.77796</a></li>
+                        <li class="py-2"><a href="/html/category/article-1966.htm" title="JavaScript如何将数组与值是数组的对象合并方法详解">JavaScript如何将数组与值是数组的对象合并方法详解</a></li>
+                        <li class="py-2"><a href="/html/category/article-1893.htm" title="JavaScript中querySelector和getElementByld(getXXXBy XX)的区别">JavaScript中querySelector和getElementByld(getXXXBy XX)的区别</a></li>
+                        <li class="py-2"><a href="/html/category/article-1899.htm" title="Azure DevOps通过SSH部署上传到服务器的应用">Azure DevOps通过SSH部署上传到服务器的应用</a></li>
+                        <li class="py-2"><a href="/html/category/article-1861.htm" title="如何从javascript中的集合中删除所有元素？">如何从javascript中的集合中删除所有元素？</a></li>
                     </ul>
     </div>
 </div>
