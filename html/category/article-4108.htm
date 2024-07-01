@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-4108.htm" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>C#关于在返回值为Task方法中使用Thread.Sleep引发的思考 - Afghanistan Address</title>
+        <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/maicons.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/css/owl.carousel.css">
+    <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/theme.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?07d6804a416dbd216ab0e3d3e283ddad";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3332997411212854"
+     crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Back to top button -->
+    <div class="back-to-top"></div>
+    <header>
+                <nav class="navbar navbar-expand-lg navbar-light navbar-float">
+            <div class="container">
+                                <a href="/" class="navbar-brand">Afghanistan Address</a>
+                                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarContent">
+                    <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
+                                                <li class="nav-item">
+                            <a href="/" class="nav-link">首页</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="/html/category/" class="nav-link">文章分类</a>
+                        </li>
+                                                <li class="nav-item">
+                            <a href="#" class="nav-link">关于</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">联系</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container mt-5">
+            <div class="page-banner">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-md-10">
+                        <h1 class="text-center">C#关于在返回值为Task方法中使用Thread.Sleep引发的思考</h1>
+                        <nav aria-label="Breadcrumb">
+                            <ul class="breadcrumb justify-content-center py-0 bg-transparent">
+                                <li class="breadcrumb-item"><a href="/">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/html/category/">文章分类</a></li>
+                                <li class="breadcrumb-item active">正文</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="page-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                          				  				  				<h2 id="起因">起因</h2> <p>最近有个小伙伴提出了一个问题，就是在使用.net core的BackgroundService的时候，对应的ExecuteAsync方法里面写如下代码，会使程序一直卡在当前方法，不会继续执行，代码如下：</p> <pre><code>public class BGService : BackgroundService {     protected override Task ExecuteAsync(CancellationToken stoppingToken)     {         while (true)         {             Thread.Sleep(1000);         }     } }</code></pre> <p>其实这个问题我们还是对Task和异步执行过程理解不够深入导致的，所以本篇文章笔者就以这个问题来对Task和异步方法执行过程来做源码的探究。<br /> PS:本文只贴出重要的代码和注释，不是其全部的代码，读者多关注下注释。</p> <h2 id="解析">解析</h2> <h3 id="threadsleep和taskdelay的区别">Thread.Sleep和Task.Delay的区别</h3> <ul> <li>Thread.Sleep分析<br /> 它会挂起当前执行线程指定时间(调用了系统内核的方法)，而这时候当前线程是不能做任何其他的事情，只能等待指定时间后再执行。最终执行的代码如下图：</li> </ul> <pre><code>private static void SleepInternal(int millisecondsTimeout) {     //这是Windows平台，不同平台调用的方法不一样     Interop.Kernel32.Sleep((uint)millisecondsTimeout); }</code></pre> <ul> <li>Task.Delay分析<br /> 它的执行实际上是交给了TimerQueueTimer，也就是定时器队列(每个进程里，所有的timer执行都在一个TimerQueueTimer队列集合里面)，在指定时间后回调方法，由ThreadPool中的线程执行。实际执行代码如下图：</li> </ul> <pre><code>public static Task Delay(int millisecondsDelay, CancellationToken cancellationToken) {     if (millisecondsDelay &lt; -1)     {         ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.millisecondsDelay, ExceptionResource.Task_Delay_InvalidMillisecondsDelay);     }     //开始执行Delay方法     return Delay((uint)millisecondsDelay, cancellationToken); }  private static Task Delay(uint millisecondsDelay, CancellationToken cancellationToken) =&gt;     cancellationToken.IsCancellationRequested ? FromCanceled(cancellationToken) :     millisecondsDelay == 0 ? CompletedTask :                                           //它继承自DelayPromise,只不过加了CancellationToken     cancellationToken.CanBeCanceled ? new DelayPromiseWithCancellation(millisecondsDelay, cancellationToken) :     //最终执行这个     new DelayPromise(millisecondsDelay);  internal DelayPromise(uint millisecondsDelay) {     if (millisecondsDelay != Timeout.UnsignedInfinite)     {         //把任务放到定时队列里         _timer = new TimerQueueTimer(s_timerCallback, this, millisecondsDelay, Timeout.UnsignedInfinite, flowExecutionContext: false);         //如果已经完成了，就把这个销毁掉         if (IsCompleted)         {             _timer.Close();         }     } }</code></pre> <p>总结来说：<br /> 1.Thread.Sleep会让当前执行线程挂起一段时间，而在挂起的过程中，不能去干其他的事情，影响线程池对线程的调度，间接影响系统的并发性。<br /> 2.Task.Delay由创建定时队列消息，在指定时间之后由线程池去处理Callback，而在这指定时间内是由系统去调度的(这里可能我理解不对)，而当前执行线程可以继续干其他事情。</p> <h3 id="多线程和异步">多线程和异步</h3> <p>Task任务默认情况下是通过线程池中的空闲线程去执行，除非设置LongRunning才会单独开启一个Thread去执行。一般来说多线程只是异步编程实现的一种方式，</p> <ul> <li>多线程<br /> 并行的处理一些任务，尤其是多核CPU，充分利用CPU的性能，增加任务的处理效率，如Paraller并行库等。</li> <li>异步<br /> IO密集型操作：如Web应用在进行数据库操作，文件操作或者调用外部接口，发生磁盘IO或者网络IO时，如果非异步操作，会使当前执行线程一直保持等待事件的完成，而不做其他的处理，导致资源被浪费。如果是异步操作，当前执行线程在出发IO操作后，线程不需要等待事件的完成再去操作，而可以由线程池调度执行其他的请求，那么当事件完成后，由操作系统硬件去通知，然后再有线程池去调度线程去执行。所以我们可以发现在执行异步方法时，await前和await后不一定是相同一个线程去执行，可能会切换线程(可以对比前后的线程Id)。<br /> CPU密集型操作：如进行大量的计算任务，需要CPU一直调度，我们在WinForm或者WPF中可能会有很深的体会。假如我们执行一个很复杂的计算任务，如果是同步的话，用户得一直等待计算完成，UI才会展示，如果是异步的话，用户不用等待计算完成，UI直接就正常显示和操作，而这部分计算由线程池提供的线程独立其执行，而不影响当前执行线程的操作。</li> </ul> <h3 id="async和await">Async和Await</h3> <p>一般来说我们使用Await和Async是一起使用的，但是它存在其传播性，它本身实际上是个语法糖，算是隐性的调用ContinueWith方法，在执行完成后继续执行其他任务，接下我们来解析下他是怎么执行的。我们看下如下代码：</p> <pre><code>public async Task AA() {     await Task.Delay(1000);     Console.WriteLine("执行到我了"); }</code></pre> <p>实际上上面的代码在编译之后，会形成一个状态机(只有标识是async的才会被编译成状态机的形式)，具体代码如下(含注释),</p> <pre><code>public class C {     [StructLayout(LayoutKind.Auto)]     [CompilerGenerated]     private struct &lt;AA&gt;d__0 : IAsyncStateMachine  //所有的异步方法都继承自它     {         //初始值是-1         public int &lt;&gt;1__state;         //异步任务方法构造器         public AsyncTaskMethodBuilder &lt;&gt;t__builder;          private TaskAwaiter &lt;&gt;u__1;          private void MoveNext()         {             int num = &lt;&gt;1__state;             try             {                 TaskAwaiter awaiter;                 if (num != 0)                 {                         //在有标识await的地方，会调用对应Task的GetAwaiter()方法，但是它还是会以当前执行线程去调用Task.Delay。                     awaiter = Task.Delay(1000).GetAwaiter();                     //当await是未完成状态                     if (!awaiter.IsCompleted)                     {                         num = (&lt;&gt;1__state = 0);                         &lt;&gt;u__1 = awaiter;                         //重点是这个方法，里面实际上是执行了ContinueWith,而在Task执行完成之后，又调用其MoveNext方法(这时候可能是不同的线程去执行的)。                         &lt;&gt;t__builder.AwaitUnsafeOnCompleted(ref awaiter, ref this);                         return;                     }                 }                 else                 {                     awaiter = &lt;&gt;u__1;                     &lt;&gt;u__1 = default(TaskAwaiter);                     num = (&lt;&gt;1__state = -1);                 }                 awaiter.GetResult();                 //在获取到值之后，继续执行await后面的代码                 Console.WriteLine("执行到我了");             }             catch (Exception exception)             {                 &lt;&gt;1__state = -2;                 &lt;&gt;t__builder.SetException(exception);                 return;             }             &lt;&gt;1__state = -2;             &lt;&gt;t__builder.SetResult();         }          void IAsyncStateMachine.MoveNext()         {             this.MoveNext();         }     }          //AA整个异步方法被编译成这样     [AsyncStateMachine(typeof(&lt;AA&gt;d__0))]     public Task AA()     {         //构建状态机         &lt;AA&gt;d__0 stateMachine = default(&lt;AA&gt;d__0);         //创建异步任务方法构造器         stateMachine.&lt;&gt;t__builder = AsyncTaskMethodBuilder.Create();         stateMachine.&lt;&gt;1__state = -1;         //执行Start方法         stateMachine.&lt;&gt;t__builder.Start(ref stateMachine);         //返回当前Task         return stateMachine.&lt;&gt;t__builder.Task;     } }</code></pre> <p>我们来看AA异步方法，被编译成一个完全不同的方法，在<aa rel="nofollow">d__0中有一个MoveNext方法，来执行Task和原来await后面的代码。<br /> AA方法中stateMachine.&lt;&gt;t__builder.Start(ref stateMachine);我们看一下到底执行了什么，如下：</aa></p> <pre><code>public struct AsyncTaskMethodBuilder&lt;TResult&gt; {     [DebuggerStepThrough]     [MethodImpl(MethodImplOptions.AggressiveInlining)]     public void Start&lt;TStateMachine&gt;(ref TStateMachine stateMachine) where TStateMachine : IAsyncStateMachine =&gt;         AsyncMethodBuilderCore.Start(ref stateMachine); }  internal static class AsyncMethodBuilderCore  {     [DebuggerStepThrough]     public static void Start&lt;TStateMachine&gt;(ref TStateMachine stateMachine) where TStateMachine : IAsyncStateMachine     {         if (stateMachine == null) // TStateMachines are generally non-nullable value types, so this check will be elided         {             ThrowHelper.ThrowArgumentNullException(ExceptionArgument.stateMachine);         }          Thread currentThread = Thread.CurrentThread;         //当前线程的执行上下文         ExecutionContext? previousExecutionCtx = currentThread._executionContext;         //当前线程的同步上下文         SynchronizationContext? previousSyncCtx = currentThread._synchronizationContext;          try         {                 //这里当前执行线程开始执行状态机的MoveNext方法             stateMachine.MoveNext();         }         finally         {             //此处省略，主要是防止上下文改变，设置上下文。         }     } }</code></pre> <p>在MoveNext方法里面，我们继续看，如果当前Task的状态是未完成的话，那么会执行一个叫做AwaitUnsafeOnCompleted的方法，我们看如下代码：</p> <pre><code>public struct AsyncTaskMethodBuilder&lt;TResult&gt; {     [MethodImpl(MethodImplOptions.AggressiveOptimization)]      internal static void AwaitUnsafeOnCompleted&lt;TAwaiter&gt;(         ref TAwaiter awaiter, IAsyncStateMachineBox box)         where TAwaiter : ICriticalNotifyCompletion     {         //一般来说当前await是TaskAwaiter继承自ITaskAwaiter，所以会计入这个判断         if ((null != (object?)default(TAwaiter)) &amp;&amp; (awaiter is ITaskAwaiter))         {             ref TaskAwaiter ta = ref Unsafe.As&lt;TAwaiter, TaskAwaiter&gt;(ref awaiter);             //这个box，里面包含MoveNext方法。             TaskAwaiter.UnsafeOnCompletedInternal(ta.m_task, box, continueOnCapturedContext: true);         }         //省略部分代码。。。     } } public readonly struct TaskAwaiter : ICriticalNotifyCompletion, ITaskAwaiter {     internal static void UnsafeOnCompletedInternal(Task task, IAsyncStateMachineBox stateMachineBox, bool continueOnCapturedContext)     {         Debug.Assert(stateMachineBox != null);         //这里省略了if判断         else         {             //执行当前TaskContinuationForAwait,也就类似ContinuWith,当前的task的ContinuWith就是执行MoveNext方法             task.UnsafeSetContinuationForAwait(stateMachineBox, continueOnCapturedContext);         }     } }</code></pre> <p>总结来说：<br /> 1.带有Async的异步方法会在编译之后生成状态机。<br /> 2.当前执行线程会一直执行，把对应的MoveNext放到task的Continuation里面，也就是当作task完成的延续任务(回调事件)。<br /> 3.当前线程不是在执行异步任务的时候切换线程，而是一直执行方法内部，直到内部方法执行完成，所以我们在编写自定义的Task方法时，应该保证该方法能够进行立即的返回Task，不要执行过多的其他事情。<br /> 4.当发生线程切换时(也可能不切换)，其实是看线程池的调度，让哪个线程去执行对应的Callback(MoveNext方法)，所以我们有时候在调试时可以发现在await前和await之后其实可能不是一个线程id。<br /> 5.其实我们想一下WinForm和WPF的应用使用异步编写，其实当前执行线程已经返回了Task(异步方法编译后，是直接返回Task)，也就是说执行完了，所以没有造成阻塞，而后来UI上的还能显示对应的元素，是因为任务调度完成，由其他线程去执行了这个操作，而这个线程保持了执行上下文和同步上下文。</p> <h2 id="结果">结果</h2> <p>1.从上述解析可以看出，当在BackgroundService中直接在While循环里面写Thread.Sleep,当前执行线程会一直执行这段代码，也就是卡到这个while了，具体到编译后的代码就是卡到<strong>stateMachine.&lt;&gt;t__builder.Start(ref stateMachine)</strong>，然后不会再继续往下执行了。<br /> 2.当我们使用async和await之后，并将Thread.Sleep替换为Task.Delay之后，当前方法就被编译成状态机，在当前线程执行到<strong>awaiter = Task.Delay(1000).GetAwaiter()</strong>之后，把当前MoveNext添加到这个Task的Continution，然后直接返回了Task，这样并不会阻塞当前线程继续往下执行，而后面的事情交给线程池空闲线程去执行。<br /> 3.如果我们不使用async和await的话，那么我们可以启动一个Task.Run(建议将TaskCreationOptions设置为LongRunning)，这样的话该方法直接返回了Task，也不会阻塞当前线程继续往下执行。<br /> 4.对于Thread.Sleep在异步编程中不建议使用，建议使用Task.Delay,这样线程能够被更有效的利用起来。</p> <p><strong>以上就是笔者的看法，因为篇幅问题，没有贴太多的代码，有兴趣的小伙伴可以去看看源码就了解了，总结的可能会有一些理解错误的地方，还请评论指正。</strong></p> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-4107.htm">pyspark读取和存入数据的三种方法</a></p>
+                                                    </div>
+                                                <div class="panel panel-default mt-5">
+                            <div class="panel-heading">
+                                <h3 class="m-0">推荐文章</h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="p-0 x-0">
+                                                                        <li class="py-2"><a href="/html/category/article-1966.htm">JavaScript如何将数组与值是数组的对象合并方法详解</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1907.htm">为MySQL创建高性能索引_Mysql_</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1856.htm">Nacos配置中心集群原理及源码分析</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1849.htm">centos离线安装nginx详细教程</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1847.htm">MyBatis 及 MyBatis Plus 纯注解方式配置(Spring Boot + Postgresql) &#8211; Milton</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1837.htm">【无标题】test setup failed fixture ‘model‘ not found</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1786.htm">Docker极简入门：使用Docker-Compose 搭建redis集群</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1761.htm">go-micro使用Consul做服务发现的方法和原理_在线工具</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1714.htm">PHP中使用if的时候为什么建议将常量放在前面？</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1654.htm">解决Qt设置QTextEdit行高的问题_C 语言</a></li>
+                                                                    </ul>
+                            </div>
+                        </div>
+                                            </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">热门文章</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2"><a href="/html/category/article-1890.htm" title="解决Redis并发带来的雪崩，击穿和穿透问题，以及搭建一个Redis伪集群">解决Redis并发带来的雪崩，击穿和穿透问题，以及搭建一个Redis伪集群</a></li>
+                        <li class="py-2"><a href="/html/category/article-1952.htm" title="深入理解Spring的@Order注解和Ordered接口">深入理解Spring的@Order注解和Ordered接口</a></li>
+                        <li class="py-2"><a href="/html/category/article-1898.htm" title="Kotlin 标准函数和静态方法[第一行代码 Kotlin 学习笔记]">Kotlin 标准函数和静态方法[第一行代码 Kotlin 学习笔记]</a></li>
+                        <li class="py-2"><a href="/html/category/article-1901.htm" title="如何在MySQL中将算术运算符（+，-，*，/）与INTERVAL关键字的单位值一起使用？">如何在MySQL中将算术运算符（+，-，*，/）与INTERVAL关键字的单位值一起使用？</a></li>
+                        <li class="py-2"><a href="/html/category/article-1878.htm" title="echart整体图形大小调整">echart整体图形大小调整</a></li>
+                        <li class="py-2"><a href="/html/category/article-3133.htm" title="微服务与领域驱动设计，架构实践总结">微服务与领域驱动设计，架构实践总结</a></li>
+                        <li class="py-2"><a href="/html/category/article-1966.htm" title="JavaScript如何将数组与值是数组的对象合并方法详解">JavaScript如何将数组与值是数组的对象合并方法详解</a></li>
+                        <li class="py-2"><a href="/html/category/article-3768.htm" title="Springboot过滤器和拦截器的区别">Springboot过滤器和拦截器的区别</a></li>
+                        <li class="py-2"><a href="/html/category/article-1896.htm" title="一、重写了equals为什么还要重写hashcode">一、重写了equals为什么还要重写hashcode</a></li>
+                        <li class="py-2"><a href="/html/category/article-1907.htm" title="为MySQL创建高性能索引_Mysql_">为MySQL创建高性能索引_Mysql_</a></li>
+                    </ul>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">归纳</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">2</span> <a href="/html/date/2024-07/" title="2024-07 归档">2024-07</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">60</span> <a href="/html/date/2024-06/" title="2024-06 归档">2024-06</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-05/" title="2024-05 归档">2024-05</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">60</span> <a href="/html/date/2024-04/" title="2024-04 归档">2024-04</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">62</span> <a href="/html/date/2024-03/" title="2024-03 归档">2024-03</a></h4>
+            </li>
+                        <li class="py-2">
+                <h4><span class="badge" style="float: right;">50</span> <a href="/html/date/2024-02/" title="2024-02 归档">2024-02</a></h4>
+            </li>
+                    </ul>
+    </div>
+</div>
+
+
+
+                    </div>
+                </div>
+            </div> <!-- .container -->
+        </div> <!-- .page-section -->
+    </main>
+        <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 py-2">
+                    <p id="copyright">
+                        Afghanistan Address 版权所有 Powered by WordPress
+                    </p>
+                </div>
+                <div class="col-sm-6 py-2 text-right">
+                    <div class="d-inline-block px-3">
+                        <a href="#">Privacy</a>
+                    </div>
+                    <div class="d-inline-block px-3">
+                        <a href="#">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .container -->
+    </footer> <!-- .page-footer -->
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/jquery-3.5.1.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/bootstrap.bundle.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/wow/wow.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/owl-carousel/js/owl.carousel.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/waypoints/jquery.waypoints.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/animateNumber/jquery.animateNumber.min.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/google-maps.js"></script>
+    <script src="/assets/addons/xcblog/js/frontend/afghanistanaddress/theme.js"></script>
+    <script>
+    $(function() {
+        $('.js_to').click(function(){
+            var url = $(this).data('url');
+            var code = $(this).data('code');
+            url += code;
+
+            window.open(url);
+        })
+    });
+    </script>
+</body>
+
+</html>
