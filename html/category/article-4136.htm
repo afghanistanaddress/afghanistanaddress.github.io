@@ -2,11 +2,11 @@
 <html lang="zh-CN">
 
 <head>
-        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1803.htm" />
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-4136.htm" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>JS教程之 TypeScript 与 JavaScript的主要区别 - Afghanistan Address</title>
+    <title>C语言实现扫雷游戏（代码） - Afghanistan Address</title>
         <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
     <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
             <div class="page-banner">
                 <div class="row justify-content-center align-items-center h-100">
                     <div class="col-md-10">
-                        <h1 class="text-center">JS教程之 TypeScript 与 JavaScript的主要区别</h1>
+                        <h1 class="text-center">C语言实现扫雷游戏（代码）</h1>
                         <nav aria-label="Breadcrumb">
                             <ul class="breadcrumb justify-content-center py-0 bg-transparent">
                                 <li class="breadcrumb-item"><a href="/">首页</a></li>
@@ -76,10 +76,28 @@ var _hmt = _hmt || [];
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
-                          				  				  				<div id="content_views" class="markdown_views prism-atom-one-light"> <p>TypeScript 和 JavaScript 都是开发人员广泛使用的编程语言。尽管它们有一些相似之处，但您也应该注意一些关键差异。在本文中，我们将仔细研究 TypeScript 和 JavaScript，以便您更好地了解何时使用每种语言。</p> <h1> <a id="TypeScript_5" rel="nofollow"></a>什么是TypeScript？</h1> <p>TypeScript 是 Microsoft 创建的一种语言。它是 JavaScript 的超集，包含 JavaScript 的所有特性等等。TypeScript 旨在使大规模开发更易于管理并提高代码准确性。</p> <p>AngularJS 2.0 中的开发不需要 TypeScript，但如果需要，可以使用它。将 TypeScript 与 AngularJS 2.0 一起使用时，代码会先从 TypeScript 转译（转换）为 JavaScript，然后再在浏览器中运行。TypeScript 代码中的任何错误都将在 JavaScript 代码中显示为错误。</p> <h1> <a id="_JavaScript_10" rel="nofollow"></a>什么是 JavaScript？</h1> <p>JavaScript 是一种创建于 1995 年的编程语言。它最初是为 Web 浏览器设计的，但后来被用于许多其他应用程序。JavaScript 是一种通用语言，可用于各种目的。</p> <p>JavaScript 是一种客户端脚本语言，可在用户计算机的浏览器中运行。这使得创建无需任何服务器端代码即可运行的 Web 应用程序变得很方便。</p> <p>JavaScript 也是一种相对容易学习的语言，因此受到有经验的程序员和刚入门的程序员的欢迎。</p> <h1> <a id="TypeScript__JavaScript__17" rel="nofollow"></a>TypeScript 和 JavaScript 之间的关键区别</h1> <p>在编程语言方面，有一些比其他语言更突出。其中两种语言是 TypeScrip</p> </p></div> 			                        <div class="col-md-12 mt-5">
-                                                        <p>上一个：<a href="/html/category/article-1802.htm">JAVA 实现websocket作为客户端（自动断线重连）</a></p>
-                                                        <p>下一个：<a href="/html/category/article-1804.htm">VMware安装Ubuntu20（图文教程，超详细）_在线工具</a></p>
+                          				  				  				<div id="content_views" class="htmledit_views"> <p>test.c</p> <pre><code class="language-cpp">#define _CRT_SECURE_NO_WARNINGS #pragma warning(disable:6031) #include "game.h"  void menu() { 	printf("*************************\n"); 	printf("*****   1. play      ****\n"); 	printf("*****   0. exit      ****\n"); 	printf("*************************\n"); }  void game() { 	char mine[ROWS][COLS] = { 0 };//存放布置好的雷的信息 	char show[ROWS][COLS] = { 0 };//存放排查出的雷的信息 	//初始化数组的内容为指定的内容 	//mine 数组在没有布置雷的时候，都是'0' 	InitBoard(mine, ROWS, COLS, '0'); 	//show 数组在没有排查雷的时候，都是'*' 	InitBoard(show, ROWS, COLS, '*');  	//设置雷 	SetMine(mine, ROW, COL);  	DisplayBoard(show, ROW, COL); 	DisplayBoard(mine, ROW, COL);  	//排查雷 	FindMine(mine, show, ROW, COL); }  int main() { 	int input = 0; 	//设置随机数的生成起点 	srand((unsigned int)time(NULL));  	do 	{ 		menu(); 		printf("请选择:&gt;"); 		scanf("%d", &amp;input); 		switch (input) 		{ 		case 1: 			game(); 			break; 		case 0: 			printf("退出游戏\n"); 			break; 		default: 			printf("选择错误\n"); 			break; 		} 	} while (input);  	return 0; }</code></pre> <p>&nbsp;game.h</p> <pre><code class="language-cpp">#pragma once  #include &lt;stdio.h&gt; #include &lt;time.h&gt; #include &lt;stdlib.h&gt;  #define ROW 9 #define COL 9  #define ROWS ROW+2 #define COLS COL+2  #define EASY_COUNT 10  void InitBoard(char board[ROWS][COLS], int rows, int cols, char set); void DisplayBoard(char board[ROWS][COLS], int row, int col); void SetMine(char board[ROWS][COLS], int row, int col); void FindMine(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col);</code></pre> <p>game,c</p> <pre><code class="language-cpp">#define _CRT_SECURE_NO_WARNINGS #pragma warning(disable:6031) #include "game.h"  void InitBoard(char board[ROWS][COLS], int rows, int cols, char set) { 	int i = 0; 	int j = 0; 	for (i = 0; i &lt; rows; i++) 	{ 		for (j = 0; j &lt; cols; j++) 		{ 			board[i][j] = set; 		} 	} }  void DisplayBoard(char board[ROWS][COLS], int row, int col) { 	int i = 0; 	int j = 0; 	printf("-------扫雷游戏-----\n"); 	for (j = 0; j &lt;= col; j++) 	{ 		printf("%d ", j); 	} 	printf("\n");  	for (i = 1; i &lt;= row; i++) 	{ 		printf("%d ", i); 		for (j = 1; j &lt;= col; j++) 		{ 			printf("%c ", board[i][j]); 		} 		printf("\n"); 	} 	printf("-------扫雷游戏-----\n");  }  void SetMine(char board[ROWS][COLS], int row, int col) { 	int count = EASY_COUNT; 	//1~9 	//1~9 	while (count) 	{ 		int x = rand() % row + 1; 		int y = rand() % col + 1;  		if (board[x][y] == '0') 		{ 			board[x][y] = '1'; 			count--; 		} 	} }  int get_mine_count(char board[ROWS][COLS], int x, int y) { 	return (board[x - 1][y] + 		board[x - 1][y - 1] + 		board[x][y - 1] + 		board[x + 1][y - 1] + 		board[x + 1][y] + 		board[x + 1][y + 1] + 		board[x][y + 1] + 		board[x - 1][y + 1] - 8 * '0'); }  void FindMine(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col) { 	int x = 0; 	int y = 0; 	int win = 0;//找到非雷的个数 	while (win &lt; row * col - EASY_COUNT) 	{ 		printf("请输入要排查的坐标:&gt;"); 		scanf("%d%d", &amp;x, &amp;y); 		if (x &gt;= 1 &amp;&amp; x &lt;= row &amp;&amp; y &gt;= 1 &amp;&amp; y &lt;= col) 		{ 			if (show[x][y] != '*') 			{ 				printf("该坐标被排查过了，不能重复排查\n"); 			} 			else 			{ 				//如果是雷 				if (mine[x][y] == '1') 				{ 					printf("很遗憾，你被炸死了\n"); 					DisplayBoard(mine, ROW, COL); 					break; 				} 				else//如果不是雷 				{ 					win++; 					//统计mine数组中x,y坐标周围有几个雷 					int count = get_mine_count(mine, x, y); 					show[x][y] = count + '0';//转换成数字字符 					DisplayBoard(show, ROW, COL); 				} 			} 		} 		else 		{ 			printf("输入的坐标非法,请重新输入\n"); 		} 	} 	if (win == row * col - EASY_COUNT) 	{ 		printf("恭喜你，排雷成功\n"); 		DisplayBoard(mine, ROW, COL); 	} }  // //基础的功能 //1. 标记功能 //2. 展开一片的功能 //</code></pre> </div> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-4135.htm">tensorflow求导和梯度计算</a></p>
                                                     </div>
+                                                <div class="panel panel-default mt-5">
+                            <div class="panel-heading">
+                                <h3 class="m-0">推荐文章</h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="p-0 x-0">
+                                                                        <li class="py-2"><a href="/html/category/article-2541.htm">Spring Cloud Feign 分析之FeignClient注解实现版本兼容</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1910.htm">[转载] Python中format函数用法</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1862.htm">将无效字符串作为参数传递给STR_TO_DATE()函数时，MySQL将返回什么？</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1850.htm">Python数据分析与展示——Pandas基本操作</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1809.htm">C#过滤DataTable中空数据和重复数据的示例代码</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1737.htm">Win10查看已存储WiFi密码的两种方法</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1735.htm">Java 语言实现简易版扫码登录_在线工具</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1704.htm">七、C++ 内联函数</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1658.htm">vue3使用vuex实现页面实时更新数据（setup）</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1646.htm">Docker镜像构建之docker commit</a></li>
+                                                                    </ul>
+                            </div>
+                        </div>
                                             </div>
                     <div class="col-md-3">
                         <div class="panel panel-default">
@@ -88,15 +106,15 @@ var _hmt = _hmt || [];
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/html/category/article-4107.htm" title="pyspark读取和存入数据的三种方法">pyspark读取和存入数据的三种方法</a></li>
-                        <li class="py-2"><a href="/html/category/article-1902.htm" title="树的同构（java实现）">树的同构（java实现）</a></li>
-                        <li class="py-2"><a href="/html/category/article-1903.htm" title="基于JDK的动态代理原理分析">基于JDK的动态代理原理分析</a></li>
-                        <li class="py-2"><a href="/html/category/article-1938.htm" title="JavaScript数字数组的均等分割方法详解">JavaScript数字数组的均等分割方法详解</a></li>
                         <li class="py-2"><a href="/html/category/article-1890.htm" title="解决Redis并发带来的雪崩，击穿和穿透问题，以及搭建一个Redis伪集群">解决Redis并发带来的雪崩，击穿和穿透问题，以及搭建一个Redis伪集群</a></li>
-                        <li class="py-2"><a href="/html/category/article-3134.htm" title="SpringMVC-@RequestMapping注解">SpringMVC-@RequestMapping注解</a></li>
+                        <li class="py-2"><a href="/html/category/article-1937.htm" title="VScode离线安装插件的方法">VScode离线安装插件的方法</a></li>
+                        <li class="py-2"><a href="/html/category/article-1880.htm" title="React&#8217;s mouseEvent doesn&#8217;t have offsetX/offsetY">React&#8217;s mouseEvent doesn&#8217;t have offsetX/offsetY</a></li>
+                        <li class="py-2"><a href="/html/category/article-4136.htm" title="C语言实现扫雷游戏（代码）">C语言实现扫雷游戏（代码）</a></li>
                         <li class="py-2"><a href="/html/category/article-1904.htm" title="在Python中使用ibis,impyla,pyhive,pyspark连接Kerberos安全认证的Hive、Impala">在Python中使用ibis,impyla,pyhive,pyspark连接Kerberos安全认证的Hive、Impala</a></li>
-                        <li class="py-2"><a href="/html/category/article-1898.htm" title="Kotlin 标准函数和静态方法[第一行代码 Kotlin 学习笔记]">Kotlin 标准函数和静态方法[第一行代码 Kotlin 学习笔记]</a></li>
-                        <li class="py-2"><a href="/html/category/article-1887.htm" title="Vue.Draggable 文档总结">Vue.Draggable 文档总结</a></li>
+                        <li class="py-2"><a href="/html/category/article-4135.htm" title="tensorflow求导和梯度计算">tensorflow求导和梯度计算</a></li>
+                        <li class="py-2"><a href="/html/category/article-3436.htm" title="记-Windows环境下Prometheus+alertmanager+windows_exporter+mtail监控部署提起网关日志">记-Windows环境下Prometheus+alertmanager+windows_exporter+mtail监控部署提起网关日志</a></li>
+                        <li class="py-2"><a href="/html/category/article-2252.htm" title="python向hive插入数据遇到的坑">python向hive插入数据遇到的坑</a></li>
+                        <li class="py-2"><a href="/html/category/article-1883.htm" title="C#实现文件Move和Copy操作_C#教程_">C#实现文件Move和Copy操作_C#教程_</a></li>
                         <li class="py-2"><a href="/html/category/article-1881.htm" title="【Azure 应用服务】Azure Function 启用 Managed Identity后， Powershell Funciton出现 ERROR: ManagedIdentityCredential authentication failed">【Azure 应用服务】Azure Function 启用 Managed Identity后， Powershell Funciton出现 ERROR: ManagedIdentityCredential authentication failed</a></li>
                     </ul>
     </div>

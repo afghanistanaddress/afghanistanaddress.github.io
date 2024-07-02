@@ -2,11 +2,11 @@
 <html lang="zh-CN">
 
 <head>
-        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-1883.htm" />
+        <link rel="canonical" href="https://afghanistanaddress.github.io/html/category/article-4135.htm" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>C#实现文件Move和Copy操作_C#教程_ - Afghanistan Address</title>
+    <title>tensorflow求导和梯度计算 - Afghanistan Address</title>
         <link rel="icon" href="/assets/addons/xcblog/img/afghanistanaddress/favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="/assets/addons/xcblog/js/frontend/afghanistanaddress/animate/animate.css">
     <link rel="stylesheet" href="/assets/addons/xcblog/css/afghanistanaddress/bootstrap.css">
@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
             <div class="page-banner">
                 <div class="row justify-content-center align-items-center h-100">
                     <div class="col-md-10">
-                        <h1 class="text-center">C#实现文件Move和Copy操作_C#教程_</h1>
+                        <h1 class="text-center">tensorflow求导和梯度计算</h1>
                         <nav aria-label="Breadcrumb">
                             <ul class="breadcrumb justify-content-center py-0 bg-transparent">
                                 <li class="breadcrumb-item"><a href="/">首页</a></li>
@@ -76,10 +76,29 @@ var _hmt = _hmt || [];
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
-                          				  				  				<p>文件移动(Move)操作和文件的复制(Copy)是C#程式开发经常遇到的方法，根据传入的源文件地址和目标文件地址参数，实现对文件的操作。实现代码如下：</p> <h3>Move操作代码</h3> <div class="ay1code"> <pre class="brush:csharp;">public static void MoveFolder(string sourcePath, string destPath)          {              if (Directory.Exists(sourcePath))              {                  if (!Directory.Exists(destPath))                  {                      //目标目录不存在则创建                        try                      {                          Directory.CreateDirectory(destPath);                      }                      catch (Exception ex)                      {                          throw new Exception("创建目标目录失败：" + ex.Message);                      }                  }                  //获得源文件下所有文件                    List&lt;string&gt; files = new List&lt;string&gt;(Directory.GetFiles(sourcePath));                  files.ForEach(c =&gt;                  {                      string destFile = Path.Combine(new string[] { destPath, Path.GetFileName(c) });                      //覆盖模式                        if (File.Exists(destFile))                      {                          File.Delete(destFile);                      }                      File.Move(c, destFile);                  });                  //获得源文件下所有目录文件                    List&lt;string&gt; folders = new List&lt;string&gt;(Directory.GetDirectories(sourcePath));                    folders.ForEach(c =&gt;                  {                      string destDir = Path.Combine(new string[] { destPath, Path.GetFileName(c) });                      //Directory.Move必须要在同一个根目录下移动才有效，不能在不同卷中移动。                        //Directory.Move(c, destDir);                          //采用递归的方法实现                        MoveFolder(c, destDir);                  });              }              else              {}          }         </pre> </div> <h3>Copy操作代码</h3> <div class="ay1code"> <pre class="brush:csharp;">public static void CopyFilefolder(string sourceFilePath, string targetFilePath)          {              //获取源文件夹中的所有非目录文件              string[] files = Directory.GetFiles(sourceFilePath);              string fileName;              string destFile;              //如果目标文件夹不存在，则新建目标文件夹              if (!Directory.Exists(targetFilePath))              {                  Directory.CreateDirectory(targetFilePath);              }              //将获取到的文件一个一个拷贝到目标文件夹中                foreach (string s in files)              {                  fileName = Path.GetFileName(s);                  destFile = Path.Combine(targetFilePath, fileName);                  File.Copy(s, destFile, true);              }              //上面一段在MSDN上可以看到源码                 //获取并存储源文件夹中的文件夹名              string[] filefolders = Directory.GetFiles(sourceFilePath);              //创建Directoryinfo实例               DirectoryInfo dirinfo = new DirectoryInfo(sourceFilePath);              //获取得源文件夹下的所有子文件夹名              DirectoryInfo[] subFileFolder = dirinfo.GetDirectories();              for (int j = 0; j &lt; subFileFolder.Length; j++)              {                  //获取所有子文件夹名                   string subSourcePath = sourceFilePath + "\\" + subFileFolder[j].ToString();                  string subTargetPath = targetFilePath + "\\" + subFileFolder[j].ToString();                  //把得到的子文件夹当成新的源文件夹，递归调用CopyFilefolder                  CopyFilefolder(subSourcePath, subTargetPath);              }          }</pre> </div> 			                        <div class="col-md-12 mt-5">
-                                                        <p>上一个：<a href="/html/category/article-1882.htm">yum安装nginx后报错nginx: [error] open() “/run/nginx.pid“ failed</a></p>
-                                                        <p>下一个：<a href="/html/category/article-1884.htm">Springboot：拦截器和过滤器</a></p>
+                          				  				  				<div id="content_views" class="htmledit_views"> <p>1.函数求一阶导</p> <pre class="has"><code class="language-python">import tensorflow as tf tf.enable_eager_execution() tfe=tf.contrib.eager from math import  pi def f(x):     return tf.square(tf.sin(x)) assert f(pi/2).numpy()==1.0 sess=tf.Session() grad_f=tfe.gradients_function(f) print(grad_f(np.zeros(1))[0].numpy()) </code></pre> <p>2.高阶函数求导</p> <pre class="has"><code class="language-python">import numpy as np def  f(x):     return tf.square(tf.sin(x))  def grad(f):     return lambda x:tfe.gradients_function(f)(x)[0]  x=tf.lin_space(-2*pi,2*pi,100) # print(grad(f)(x).numpy()) x=x.numpy() import matplotlib.pyplot as plt plt.plot(x,f(x).numpy(),label="f") plt.plot(x,grad(f)(x).numpy(),label="first derivative")#一阶导 plt.plot(x,grad(grad(f))(x).numpy(),label="second derivative")#二阶导 plt.plot(x,grad(grad(grad(f)))(x).numpy(),label="third derivative")#三阶导 plt.legend() plt.show()</code></pre> <p>&nbsp;</p> <pre class="has"><code class="language-python">def f(x,y):     output=1     for i in range(int(y)):         output=tf.multiply(output,x)     return output  def g(x,y):     return tfe.gradients_function(f)(x,y)[0]  print(f(3.0,2).numpy()) #f(x)=x^2 print(g(3.0,2).numpy()) #f'(x)=2*x print(f(4.0,3).numpy())#f(x)=x^3 print(g(4.0,3).numpy())#f(x)=3x^2</code></pre> <p>3.函数求一阶偏导</p> <pre class="has"><code class="language-python">x=tf.ones((2,2)) with tf.GradientTape(persistent=True) as t:     t.watch(x)     y=tf.reduce_sum(x)     z=tf.multiply(y,y)      dz_dy=t.gradient(z,y) print(dz_dy.numpy()) dz_dx=t.gradient(z,x) print(dz_dx.numpy()) for i in [0, 1]:   for j in [0, 1]:    print(dz_dx[i][j].numpy() )</code></pre> <p>4.函数求二阶偏导</p> <pre class="has"><code class="language-python">x=tf.constant(2.0) with tf.GradientTape() as t:     with tf.GradientTape() as t2:         t2.watch(x)         y=x*x*x     dy_dx=t2.gradient(y,x) d2y_dx2=t.gradient(dy_dx,x)  print(dy_dx.numpy()) print(d2y_dx2.numpy())</code></pre> <p>&nbsp;</p> </p></div> 			                        <div class="col-md-12 mt-5">
+                                                        <p>上一个：<a href="/html/category/article-4108.htm">C#关于在返回值为Task方法中使用Thread.Sleep引发的思考</a></p>
+                                                        <p>下一个：<a href="/html/category/article-4136.htm">C语言实现扫雷游戏（代码）</a></p>
                                                     </div>
+                                                <div class="panel panel-default mt-5">
+                            <div class="panel-heading">
+                                <h3 class="m-0">推荐文章</h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="p-0 x-0">
+                                                                        <li class="py-2"><a href="/html/category/article-3133.htm">微服务与领域驱动设计，架构实践总结</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1893.htm">JavaScript中querySelector和getElementByld(getXXXBy XX)的区别</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1876.htm">python入门基础字典及相关操作详解</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1869.htm">Python 一网打尽＜排序算法＞之从希尔排序算法的分治哲学开始</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1856.htm">Nacos配置中心集群原理及源码分析</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1778.htm">mysql datetime详解_Mysql 之Date,DateTime,TimeStamp三种种类的详解</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1777.htm">用js写一个超级炫酷的环形时钟效果</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1742.htm">ElasticSearch（五） 整合Spring-data-elasticsearch</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1711.htm">Shell基础变量定义的规则和分类详解</a></li>
+                                                                        <li class="py-2"><a href="/html/category/article-1689.htm">python 在sql语句中使用%s,%d,%f</a></li>
+                                                                    </ul>
+                            </div>
+                        </div>
                                             </div>
                     <div class="col-md-3">
                         <div class="panel panel-default">
@@ -88,16 +107,16 @@ var _hmt = _hmt || [];
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/html/category/article-1881.htm" title="【Azure 应用服务】Azure Function 启用 Managed Identity后， Powershell Funciton出现 ERROR: ManagedIdentityCredential authentication failed">【Azure 应用服务】Azure Function 启用 Managed Identity后， Powershell Funciton出现 ERROR: ManagedIdentityCredential authentication failed</a></li>
-                        <li class="py-2"><a href="/html/category/article-1893.htm" title="JavaScript中querySelector和getElementByld(getXXXBy XX)的区别">JavaScript中querySelector和getElementByld(getXXXBy XX)的区别</a></li>
-                        <li class="py-2"><a href="/html/category/article-4135.htm" title="tensorflow求导和梯度计算">tensorflow求导和梯度计算</a></li>
-                        <li class="py-2"><a href="/html/category/article-1907.htm" title="为MySQL创建高性能索引_Mysql_">为MySQL创建高性能索引_Mysql_</a></li>
-                        <li class="py-2"><a href="/html/category/article-1903.htm" title="基于JDK的动态代理原理分析">基于JDK的动态代理原理分析</a></li>
-                        <li class="py-2"><a href="/html/category/article-1952.htm" title="深入理解Spring的@Order注解和Ordered接口">深入理解Spring的@Order注解和Ordered接口</a></li>
-                        <li class="py-2"><a href="/html/category/article-1909.htm" title="Redis的高并发是如何支持的">Redis的高并发是如何支持的</a></li>
-                        <li class="py-2"><a href="/html/category/article-1900.htm" title="网页盒子水平布局方式">网页盒子水平布局方式</a></li>
-                        <li class="py-2"><a href="/html/category/article-1896.htm" title="一、重写了equals为什么还要重写hashcode">一、重写了equals为什么还要重写hashcode</a></li>
-                        <li class="py-2"><a href="/html/category/article-3435.htm" title="SpringMVC之@RequestMapping注解">SpringMVC之@RequestMapping注解</a></li>
+                        <li class="py-2"><a href="/html/category/article-2541.htm" title="Spring Cloud Feign 分析之FeignClient注解实现版本兼容">Spring Cloud Feign 分析之FeignClient注解实现版本兼容</a></li>
+                        <li class="py-2"><a href="/html/category/article-1885.htm" title="Java中的base64编码器_java_">Java中的base64编码器_java_</a></li>
+                        <li class="py-2"><a href="/html/category/article-4080.htm" title="python的collections.Counter方法">python的collections.Counter方法</a></li>
+                        <li class="py-2"><a href="/html/category/article-1891.htm" title="八大基本数据类型及数据类型之间的转换&#8212;zixiao">八大基本数据类型及数据类型之间的转换&#8212;zixiao</a></li>
+                        <li class="py-2"><a href="/html/category/article-1923.htm" title="layUI利用JQuery设置select下拉列表的值重新渲染">layUI利用JQuery设置select下拉列表的值重新渲染</a></li>
+                        <li class="py-2"><a href="/html/category/article-1910.htm" title="[转载] Python中format函数用法">[转载] Python中format函数用法</a></li>
+                        <li class="py-2"><a href="/html/category/article-4107.htm" title="pyspark读取和存入数据的三种方法">pyspark读取和存入数据的三种方法</a></li>
+                        <li class="py-2"><a href="/html/category/article-1880.htm" title="React&#8217;s mouseEvent doesn&#8217;t have offsetX/offsetY">React&#8217;s mouseEvent doesn&#8217;t have offsetX/offsetY</a></li>
+                        <li class="py-2"><a href="/html/category/article-1924.htm" title="js制作简易秒表效果详细讲解、开始、暂停与结束（定时器制作和时间戳制作）">js制作简易秒表效果详细讲解、开始、暂停与结束（定时器制作和时间戳制作）</a></li>
+                        <li class="py-2"><a href="/html/category/article-1938.htm" title="JavaScript数字数组的均等分割方法详解">JavaScript数字数组的均等分割方法详解</a></li>
                     </ul>
     </div>
 </div>
