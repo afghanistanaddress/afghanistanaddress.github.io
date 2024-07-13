@@ -76,7 +76,7 @@ var _hmt = _hmt || [];
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
-                          				  				  				<div id="content_views" class="markdown_views prism-atom-one-dark"> <div class="toc"> <h3>大数据体系</h3> <ul> <li><a href="#pythonhive_2" rel="nofollow">python向hive插入数据遇到的坑</a></li> </ul> </div> <h1> <a id="pythonhive_2" rel="nofollow"></a>python向hive插入数据遇到的坑</h1> <p>因项目需求，应用python建模需要通过hive取数，并将结果写入hive表。<br /> 尝试了以下几条坑爹路，仅做记录如下：</p> <ol> <li> <p>通过impyla库搭建hive与python桥梁<br /> 1.1 环境配置的坑（回头放连接）<br /> 注: 远程访问hive一定要记得配置账号密码！！！报错：。。。-4.。。<br /> 1.2 一定不要用impyla中的executemany去批量插入数据，也不要用其他的方式向hive插入数据，都是坑！奇慢无比！找资料也都是说不建议这么做。</p> </li> <li> <p>长途跋涉hdfs法<br /> 2.1 先用python的pyhdfs库将结果写成hdfs文件，然后。。。尼玛！！根本没成功连上服务器的hdfs，本地hdfs到是可以的<br /> 2.2 那既然写hdfs，我就直接将模型结果通过hadoop/hdfs命令上传至hdfs。然后， 通过hive命令load data将hdfs中的结果再导入hive。虽然有点绕，但是成功了！！！BUT！！！小兄弟，这个直接操作HDFS风险太高了，要不你还是另寻他法吧，不可以拒绝哦！！！<br /> 2.3 好吧，根据建议，使用kafka，抱歉这个坑后面再来踩。<br /> 2.4 临时处理方案：先将结果写入mysql，再转入hive，这个没有坑，具体我也只是写到mysql，无坑。。就是有点绕。。。</p> </li> </ol> </div> 			                        <div class="col-md-12 mt-5">
+                          				  				  				<div id="content_views" class="markdown_views prism-atom-one-dark"> <div class="toc"> <h3>大数据体系</h3> <ul> <li>python向hive插入数据遇到的坑</li> </ul> </div> <h1> python向hive插入数据遇到的坑</h1> <p>因项目需求，应用python建模需要通过hive取数，并将结果写入hive表。<br /> 尝试了以下几条坑爹路，仅做记录如下：</p> <ol> <li> <p>通过impyla库搭建hive与python桥梁<br /> 1.1 环境配置的坑（回头放连接）<br /> 注: 远程访问hive一定要记得配置账号密码！！！报错：。。。-4.。。<br /> 1.2 一定不要用impyla中的executemany去批量插入数据，也不要用其他的方式向hive插入数据，都是坑！奇慢无比！找资料也都是说不建议这么做。</p> </li> <li> <p>长途跋涉hdfs法<br /> 2.1 先用python的pyhdfs库将结果写成hdfs文件，然后。。。尼玛！！根本没成功连上服务器的hdfs，本地hdfs到是可以的<br /> 2.2 那既然写hdfs，我就直接将模型结果通过hadoop/hdfs命令上传至hdfs。然后， 通过hive命令load data将hdfs中的结果再导入hive。虽然有点绕，但是成功了！！！BUT！！！小兄弟，这个直接操作HDFS风险太高了，要不你还是另寻他法吧，不可以拒绝哦！！！<br /> 2.3 好吧，根据建议，使用kafka，抱歉这个坑后面再来踩。<br /> 2.4 临时处理方案：先将结果写入mysql，再转入hive，这个没有坑，具体我也只是写到mysql，无坑。。就是有点绕。。。</p> </li> </ol> </div> 			                        <div class="col-md-12 mt-5">
                                                         <p>上一个：<a href="/html/category/article-2251.htm">Spring动态代理中有什么方法不会被代理探究</a></p>
                                                         <p>下一个：<a href="/html/category/article-2541.htm">Spring Cloud Feign 分析之FeignClient注解实现版本兼容</a></p>
                                                     </div>
@@ -107,16 +107,16 @@ var _hmt = _hmt || [];
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/html/category/article-4491.htm" title="宠物医院治仓鼠吗（宠物医院治仓鼠的病吗）">宠物医院治仓鼠吗（宠物医院治仓鼠的病吗）</a></li>
-                        <li class="py-2"><a href="/html/category/article-4079.htm" title="vue使用canvas绘制圆环_vue.js_">vue使用canvas绘制圆环_vue.js_</a></li>
                         <li class="py-2"><a href="/html/category/article-2542.htm" title="素数最多为n">素数最多为n</a></li>
-                        <li class="py-2"><a href="/html/category/article-4107.htm" title="pyspark读取和存入数据的三种方法">pyspark读取和存入数据的三种方法</a></li>
-                        <li class="py-2"><a href="/html/category/article-2251.htm" title="Spring动态代理中有什么方法不会被代理探究">Spring动态代理中有什么方法不会被代理探究</a></li>
-                        <li class="py-2"><a href="/html/category/article-4135.htm" title="tensorflow求导和梯度计算">tensorflow求导和梯度计算</a></li>
-                        <li class="py-2"><a href="/html/category/article-1906.htm" title="Java Random随机数">Java Random随机数</a></li>
-                        <li class="py-2"><a href="/html/category/article-1924.htm" title="js制作简易秒表效果详细讲解、开始、暂停与结束（定时器制作和时间戳制作）">js制作简易秒表效果详细讲解、开始、暂停与结束（定时器制作和时间戳制作）</a></li>
-                        <li class="py-2"><a href="/html/category/article-3134.htm" title="SpringMVC-@RequestMapping注解">SpringMVC-@RequestMapping注解</a></li>
-                        <li class="py-2"><a href="/html/category/article-1908.htm" title="mysql错误解决方案">mysql错误解决方案</a></li>
+                        <li class="py-2"><a href="/html/category/article-4454.htm" title="闲鱼无货源怎么弄（闲鱼无货源怎么卖货）">闲鱼无货源怎么弄（闲鱼无货源怎么卖货）</a></li>
+                        <li class="py-2"><a href="/html/category/article-1903.htm" title="基于JDK的动态代理原理分析">基于JDK的动态代理原理分析</a></li>
+                        <li class="py-2"><a href="/html/category/article-5581.htm" title="动物医院好评模板怎么写的啊视频（宠物医院优质好评500字）">动物医院好评模板怎么写的啊视频（宠物医院优质好评500字）</a></li>
+                        <li class="py-2"><a href="/html/category/article-4526.htm" title="动物疫苗价格一览表图片大全集下载 动物疫苗价格一览表图片大全集下载">动物疫苗价格一览表图片大全集下载 动物疫苗价格一览表图片大全集下载</a></li>
+                        <li class="py-2"><a href="/html/category/article-4335.htm" title="宠物领养须知内容（宠物领养是什么意思,免费的嘛）">宠物领养须知内容（宠物领养是什么意思,免费的嘛）</a></li>
+                        <li class="py-2"><a href="/html/category/article-4455.htm" title="我们城市有个动物园英语作文（我们城市有一个大动物园翻译）">我们城市有个动物园英语作文（我们城市有一个大动物园翻译）</a></li>
+                        <li class="py-2"><a href="/html/category/article-2835.htm" title="在C ++中验证堆栈序列">在C ++中验证堆栈序列</a></li>
+                        <li class="py-2"><a href="/html/category/article-1909.htm" title="Redis的高并发是如何支持的">Redis的高并发是如何支持的</a></li>
+                        <li class="py-2"><a href="/html/category/article-1965.htm" title="设置网页脚本动态顺序加载">设置网页脚本动态顺序加载</a></li>
                     </ul>
     </div>
 </div>
@@ -128,7 +128,7 @@ var _hmt = _hmt || [];
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
                         <li class="py-2">
-                <h4><span class="badge" style="float: right;">20</span> <a href="/html/date/2024-07/" title="2024-07 归档">2024-07</a></h4>
+                <h4><span class="badge" style="float: right;">26</span> <a href="/html/date/2024-07/" title="2024-07 归档">2024-07</a></h4>
             </li>
                         <li class="py-2">
                 <h4><span class="badge" style="float: right;">60</span> <a href="/html/date/2024-06/" title="2024-06 归档">2024-06</a></h4>

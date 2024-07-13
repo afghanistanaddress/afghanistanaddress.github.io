@@ -76,7 +76,7 @@ var _hmt = _hmt || [];
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
-                          				  				  				<div id="content_views" class="markdown_views prism-atom-one-light"> <p>参考博客:<a href="" rel="nofollow">https://blog.csdn.net/dai451954706/article/details/50464036</a></p> <p><strong>起初一直以为是导出的jar包有问题，百度了很久也没找到解决办法，最后终于让我找到了有用的解决办法。</strong></p> <p><img decoding="async" src="http://img.555519.xyz/uploads3/20220722/280f8bbd81fb65c8cf34a66c86b6cef8.jpg" alt="hadoop运行jar包处理文件一直处于Running job状态的解决方法"></p> <p><strong>在<font color="red">yarn-site.xml</font>中添加</strong></p> <pre><code>&lt;property&gt;     &lt;name&gt;yarn.nodemanager.resource.memory-mb&lt;/name&gt;     &lt;value&gt;20480&lt;/value&gt; &lt;/property&gt; &lt;property&gt;    &lt;name&gt;yarn.scheduler.minimum-allocation-mb&lt;/name&gt;    &lt;value&gt;2048&lt;/value&gt; &lt;/property&gt; &lt;property&gt;     &lt;name&gt;yarn.nodemanager.vmem-pmem-ratio&lt;/name&gt;     &lt;value&gt;2.1&lt;/value&gt; &lt;/property&gt;</code></pre> <p><strong>我改完这个配置文件之后再次运行，发现还是处于Running job的状态，然后在<font color="red">mapred-site.xml</font>中把下面几行配置删掉</strong></p> <pre><code> &lt;property&gt; 	 &lt;name&gt;mapreduce.framework.name&lt;/name&gt; 	  &lt;value&gt;yarn&lt;/value&gt;  &lt;/property&gt;</code></pre> <p><strong>然后再次执行就成功了</strong><br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220722/f4224cb3858b0106dfbaa40c76effd5b.jpg" alt="hadoop运行jar包处理文件一直处于Running job状态的解决方法"></p> </div> 			                        <div class="col-md-12 mt-5">
+                          				  				  				<div id="content_views" class="markdown_views prism-atom-one-light"> <p>参考博客:https://blog.csdn.net/dai451954706/article/details/50464036</p> <p><strong>起初一直以为是导出的jar包有问题，百度了很久也没找到解决办法，最后终于让我找到了有用的解决办法。</strong></p> <p><img decoding="async" src="http://img.555519.xyz/uploads3/20220722/280f8bbd81fb65c8cf34a66c86b6cef8.jpg" alt="hadoop运行jar包处理文件一直处于Running job状态的解决方法"></p> <p><strong>在<font color="red">yarn-site.xml</font>中添加</strong></p> <pre><code><property>     <name>yarn.nodemanager.resource.memory-mb</name>     <value>20480</value> </property> <property>    <name>yarn.scheduler.minimum-allocation-mb</name>    <value>2048</value> </property> <property>     <name>yarn.nodemanager.vmem-pmem-ratio</name>     <value>2.1</value> </property></code></pre> <p><strong>我改完这个配置文件之后再次运行，发现还是处于Running job的状态，然后在<font color="red">mapred-site.xml</font>中把下面几行配置删掉</strong></p> <pre><code> <property> 	 <name>mapreduce.framework.name</name> 	  <value>yarn</value>  </property></code></pre> <p><strong>然后再次执行就成功了</strong><br /><img decoding="async" src="http://img.555519.xyz/uploads3/20220722/f4224cb3858b0106dfbaa40c76effd5b.jpg" alt="hadoop运行jar包处理文件一直处于Running job状态的解决方法"></p> </div> 			                        <div class="col-md-12 mt-5">
                                                         <p>上一个：<a href="/html/category/article-1809.htm">C#过滤DataTable中空数据和重复数据的示例代码</a></p>
                                                         <p>下一个：<a href="/html/category/article-1811.htm">Spring mvc参数校验</a></p>
                                                     </div>
@@ -88,16 +88,16 @@ var _hmt = _hmt || [];
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/html/category/article-1924.htm" title="js制作简易秒表效果详细讲解、开始、暂停与结束（定时器制作和时间戳制作）">js制作简易秒表效果详细讲解、开始、暂停与结束（定时器制作和时间戳制作）</a></li>
-                        <li class="py-2"><a href="/html/category/article-1898.htm" title="Kotlin 标准函数和静态方法[第一行代码 Kotlin 学习笔记]">Kotlin 标准函数和静态方法[第一行代码 Kotlin 学习笔记]</a></li>
-                        <li class="py-2"><a href="/html/category/article-4381.htm" title="动物疫苗本怎么办理（动物疫苗证去哪里办怎么办）">动物疫苗本怎么办理（动物疫苗证去哪里办怎么办）</a></li>
-                        <li class="py-2"><a href="/html/category/article-4107.htm" title="pyspark读取和存入数据的三种方法">pyspark读取和存入数据的三种方法</a></li>
-                        <li class="py-2"><a href="/html/category/article-3133.htm" title="微服务与领域驱动设计，架构实践总结">微服务与领域驱动设计，架构实践总结</a></li>
-                        <li class="py-2"><a href="/html/category/article-4135.htm" title="tensorflow求导和梯度计算">tensorflow求导和梯度计算</a></li>
-                        <li class="py-2"><a href="/html/category/article-2541.htm" title="Spring Cloud Feign 分析之FeignClient注解实现版本兼容">Spring Cloud Feign 分析之FeignClient注解实现版本兼容</a></li>
-                        <li class="py-2"><a href="/html/category/article-1903.htm" title="基于JDK的动态代理原理分析">基于JDK的动态代理原理分析</a></li>
-                        <li class="py-2"><a href="/html/category/article-1965.htm" title="设置网页脚本动态顺序加载">设置网页脚本动态顺序加载</a></li>
+                        <li class="py-2"><a href="/html/category/article-1908.htm" title="mysql错误解决方案">mysql错误解决方案</a></li>
+                        <li class="py-2"><a href="/html/category/article-4490.htm" title="动物疫苗在哪打的针图片视频（动物注射疫苗注射哪里）">动物疫苗在哪打的针图片视频（动物注射疫苗注射哪里）</a></li>
+                        <li class="py-2"><a href="/html/category/article-5581.htm" title="动物医院好评模板怎么写的啊视频（宠物医院优质好评500字）">动物医院好评模板怎么写的啊视频（宠物医院优质好评500字）</a></li>
+                        <li class="py-2"><a href="/html/category/article-1951.htm" title="设计模式学习笔记（十三）组合模式及其在树形结构中的应用">设计模式学习笔记（十三）组合模式及其在树形结构中的应用</a></li>
                         <li class="py-2"><a href="/html/category/article-4080.htm" title="python的collections.Counter方法">python的collections.Counter方法</a></li>
+                        <li class="py-2"><a href="/html/category/article-4334.htm" title="和田宠物医院污水处理方案 和田宠物医院污水处理方案公示">和田宠物医院污水处理方案 和田宠物医院污水处理方案公示</a></li>
+                        <li class="py-2"><a href="/html/category/article-4381.htm" title="动物疫苗本怎么办理（动物疫苗证去哪里办怎么办）">动物疫苗本怎么办理（动物疫苗证去哪里办怎么办）</a></li>
+                        <li class="py-2"><a href="/html/category/article-1952.htm" title="深入理解Spring的@Order注解和Ordered接口">深入理解Spring的@Order注解和Ordered接口</a></li>
+                        <li class="py-2"><a href="/html/category/article-5940.htm" title="北京宠物店兼职（北京宠物医院兼职）">北京宠物店兼职（北京宠物医院兼职）</a></li>
+                        <li class="py-2"><a href="/html/category/article-2835.htm" title="在C ++中验证堆栈序列">在C ++中验证堆栈序列</a></li>
                     </ul>
     </div>
 </div>
@@ -109,7 +109,7 @@ var _hmt = _hmt || [];
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
                         <li class="py-2">
-                <h4><span class="badge" style="float: right;">20</span> <a href="/html/date/2024-07/" title="2024-07 归档">2024-07</a></h4>
+                <h4><span class="badge" style="float: right;">26</span> <a href="/html/date/2024-07/" title="2024-07 归档">2024-07</a></h4>
             </li>
                         <li class="py-2">
                 <h4><span class="badge" style="float: right;">60</span> <a href="/html/date/2024-06/" title="2024-06 归档">2024-06</a></h4>

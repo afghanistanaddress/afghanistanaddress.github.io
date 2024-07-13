@@ -76,7 +76,7 @@ var _hmt = _hmt || [];
             <div class="container">
                 <div class="row">
                     <div class="col-md-9">
-                          				  				  				<div id="content_views" class="htmledit_views"> <p>初学K8S，对于node 和 pod，感到很迷茫，查询之后，记录如下：</p> <h2>pod</h2> <p>在Kubernetes中，最小的管理元素不是一个个独立的容器，而是Pod,Pod是最小的，管理，创建，计划的最小单元.</p> <p><img decoding="async" alt="" height="206" src="http://img.555519.xyz/uploads3/20220820/1538e7a610eeb11a0a0d648c5c778277.jpg"></p> <p>一个<a href="http://www.m6000.cn/wp-content/themes/begin%20lts/inc/go.php?url=https://www.kubernetes.org.cn/tags/pod"  title="Pod" rel="nofollow">Pod</a>（as ub a pod of whales or pea pod）相当于一个共享context的配置组，在同一个context下，应用可能还会有独立的cgroup隔离机制，一个Pod是一个容器环境下的“逻辑主机”，它可能包含一个或者多个紧密相连的应用，这些应用可能是在同一个物理主机或虚拟机上。</p> <p>Pod 的context可以理解成多个linux命名空间的联合</p> <ul> <li>PID 命名空间（同一个Pod中应用可以看到其它进程）</li> <li>网络 命名空间（同一个Pod的中的应用对相同的IP地址和端口有权限）</li> <li>IPC 命名空间（同一个Pod中的应用可以通过VPC或者POSIX进行通信）</li> <li>UTS 命名空间（同一个Pod中的应用共享一个主机名称）</li> </ul> <p>同一个Pod中的应用可以共享磁盘，磁盘是Pod级的，应用可以通过文件系统调用。</p> <p>查看pod 所属信息：</p> <pre><code>~&gt; kubectl get pod -o wide NAME    READY   STATUS    RESTARTS   AGE   IP           NODE    NOMINATED NODE   READINESS GATES test   1/1     Running    0          14d   192.168.X.X  worker   &lt;none&gt;           &lt;none&gt;</code></pre> <h2><strong>Node</strong></h2> <p>Node是Pod真正运行的主机，可以物理机，也可以是虚拟机。为了管理Pod，每个Node节点上至少要运行container runtime（比如docker或者rkt）、kubelet和kube-proxy服务。</p> <p><img fetchpriority="high" decoding="async" alt="" height="295" src="http://img.555519.xyz/uploads3/20220820/c95493efbe975f92309df2ea9676e03a.jpg"></p> <p>&nbsp;不像其他的资源（如Pod和Namespace），Node本质上不是Kubernetes来创建的，Kubernetes只是管理Node上的资源。虽然可以通过Manifest创建一个Node对象（如下json所示），但Kubernetes也只是去检查是否真的是有这么一个Node，如果检查失败，也不会往上调度Pod。</p> <p>每个Node都包括以下状态信息</p> <ul> <li>地址：包括hostname、外网IP和内网IP</li> <li>条件（Condition）：包括OutOfDisk、Ready、MemoryPressure和DiskPressure</li> <li>容量（Capacity）：Node上的可用资源，包括CPU、内存和Pod总数</li> <li>基本信息（Info）：包括内核版本、容器引擎版本、OS类型等</li> </ul> <p>&nbsp;如果node 被删除，所拥有的pod会自动分流到其他的node，但是存在特殊的无法被分流的pod</p> </div> 			                        <div class="col-md-12 mt-5">
+                          				  				  				<div id="content_views" class="htmledit_views"> <p>初学K8S，对于node 和 pod，感到很迷茫，查询之后，记录如下：</p> <h2>pod</h2> <p>在Kubernetes中，最小的管理元素不是一个个独立的容器，而是Pod,Pod是最小的，管理，创建，计划的最小单元.</p> <p><img decoding="async" alt="" height="206" src="http://img.555519.xyz/uploads3/20220820/1538e7a610eeb11a0a0d648c5c778277.jpg"></p> <p>一个Pod（as ub a pod of whales or pea pod）相当于一个共享context的配置组，在同一个context下，应用可能还会有独立的cgroup隔离机制，一个Pod是一个容器环境下的“逻辑主机”，它可能包含一个或者多个紧密相连的应用，这些应用可能是在同一个物理主机或虚拟机上。</p> <p>Pod 的context可以理解成多个linux命名空间的联合</p> <ul> <li>PID 命名空间（同一个Pod中应用可以看到其它进程）</li> <li>网络 命名空间（同一个Pod的中的应用对相同的IP地址和端口有权限）</li> <li>IPC 命名空间（同一个Pod中的应用可以通过VPC或者POSIX进行通信）</li> <li>UTS 命名空间（同一个Pod中的应用共享一个主机名称）</li> </ul> <p>同一个Pod中的应用可以共享磁盘，磁盘是Pod级的，应用可以通过文件系统调用。</p> <p>查看pod 所属信息：</p> <pre><code>~> kubectl get pod -o wide NAME    READY   STATUS    RESTARTS   AGE   IP           NODE    NOMINATED NODE   READINESS GATES test   1/1     Running    0          14d   192.168.X.X  worker   <none>           <none></code></pre> <h2><strong>Node</strong></h2> <p>Node是Pod真正运行的主机，可以物理机，也可以是虚拟机。为了管理Pod，每个Node节点上至少要运行container runtime（比如docker或者rkt）、kubelet和kube-proxy服务。</p> <p><img fetchpriority="high" decoding="async" alt="" height="295" src="http://img.555519.xyz/uploads3/20220820/c95493efbe975f92309df2ea9676e03a.jpg"></p> <p>&nbsp;不像其他的资源（如Pod和Namespace），Node本质上不是Kubernetes来创建的，Kubernetes只是管理Node上的资源。虽然可以通过Manifest创建一个Node对象（如下json所示），但Kubernetes也只是去检查是否真的是有这么一个Node，如果检查失败，也不会往上调度Pod。</p> <p>每个Node都包括以下状态信息</p> <ul> <li>地址：包括hostname、外网IP和内网IP</li> <li>条件（Condition）：包括OutOfDisk、Ready、MemoryPressure和DiskPressure</li> <li>容量（Capacity）：Node上的可用资源，包括CPU、内存和Pod总数</li> <li>基本信息（Info）：包括内核版本、容器引擎版本、OS类型等</li> </ul> <p>&nbsp;如果node 被删除，所拥有的pod会自动分流到其他的node，但是存在特殊的无法被分流的pod</p> </div> 			                        <div class="col-md-12 mt-5">
                                                         <p>上一个：<a href="/html/category/article-1854.htm">java的Integer中也会有缓存</a></p>
                                                         <p>下一个：<a href="/html/category/article-1856.htm">Nacos配置中心集群原理及源码分析</a></p>
                                                     </div>
@@ -88,16 +88,16 @@ var _hmt = _hmt || [];
     </div>
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
-                        <li class="py-2"><a href="/html/category/article-4415.htm" title="最好的电磁炉牌子是哪个牌子(最好的电磁炉牌子是哪个品牌)">最好的电磁炉牌子是哪个牌子(最好的电磁炉牌子是哪个品牌)</a></li>
-                        <li class="py-2"><a href="/html/category/article-1896.htm" title="一、重写了equals为什么还要重写hashcode">一、重写了equals为什么还要重写hashcode</a></li>
-                        <li class="py-2"><a href="/html/category/article-4108.htm" title="C#关于在返回值为Task方法中使用Thread.Sleep引发的思考">C#关于在返回值为Task方法中使用Thread.Sleep引发的思考</a></li>
-                        <li class="py-2"><a href="/html/category/article-1903.htm" title="基于JDK的动态代理原理分析">基于JDK的动态代理原理分析</a></li>
-                        <li class="py-2"><a href="/html/category/article-4380.htm" title="12种最适合学生养的宠物便宜（学生能养的宠物）">12种最适合学生养的宠物便宜（学生能养的宠物）</a></li>
-                        <li class="py-2"><a href="/html/category/article-2251.htm" title="Spring动态代理中有什么方法不会被代理探究">Spring动态代理中有什么方法不会被代理探究</a></li>
-                        <li class="py-2"><a href="/html/category/article-3741.htm" title="Java中数组的定义与使用(一)">Java中数组的定义与使用(一)</a></li>
-                        <li class="py-2"><a href="/html/category/article-2252.htm" title="python向hive插入数据遇到的坑">python向hive插入数据遇到的坑</a></li>
+                        <li class="py-2"><a href="/html/category/article-5941.htm" title="余定邦（余定邦是什么电视剧人物）">余定邦（余定邦是什么电视剧人物）</a></li>
+                        <li class="py-2"><a href="/html/category/article-4080.htm" title="python的collections.Counter方法">python的collections.Counter方法</a></li>
+                        <li class="py-2"><a href="/html/category/article-5582.htm" title="偷奸耍滑的下场&#x1f92d;&#x1f92d;#军旅剧">偷奸耍滑的下场&#x1f92d;&#x1f92d;#军旅剧</a></li>
+                        <li class="py-2"><a href="/html/category/article-1951.htm" title="设计模式学习笔记（十三）组合模式及其在树形结构中的应用">设计模式学习笔记（十三）组合模式及其在树形结构中的应用</a></li>
+                        <li class="py-2"><a href="/html/category/article-2541.htm" title="Spring Cloud Feign 分析之FeignClient注解实现版本兼容">Spring Cloud Feign 分析之FeignClient注解实现版本兼容</a></li>
+                        <li class="py-2"><a href="/html/category/article-4526.htm" title="动物疫苗价格一览表图片大全集下载 动物疫苗价格一览表图片大全集下载">动物疫苗价格一览表图片大全集下载 动物疫苗价格一览表图片大全集下载</a></li>
                         <li class="py-2"><a href="/html/category/article-4135.htm" title="tensorflow求导和梯度计算">tensorflow求导和梯度计算</a></li>
-                        <li class="py-2"><a href="/html/category/article-3133.htm" title="微服务与领域驱动设计，架构实践总结">微服务与领域驱动设计，架构实践总结</a></li>
+                        <li class="py-2"><a href="/html/category/article-1901.htm" title="如何在MySQL中将算术运算符（+，-，*，/）与INTERVAL关键字的单位值一起使用？">如何在MySQL中将算术运算符（+，-，*，/）与INTERVAL关键字的单位值一起使用？</a></li>
+                        <li class="py-2"><a href="/html/category/article-4415.htm" title="最好的电磁炉牌子是哪个牌子(最好的电磁炉牌子是哪个品牌)">最好的电磁炉牌子是哪个牌子(最好的电磁炉牌子是哪个品牌)</a></li>
+                        <li class="py-2"><a href="/html/category/article-1952.htm" title="深入理解Spring的@Order注解和Ordered接口">深入理解Spring的@Order注解和Ordered接口</a></li>
                     </ul>
     </div>
 </div>
@@ -109,7 +109,7 @@ var _hmt = _hmt || [];
     <div class="panel-body">
         <ul class="p-0 x-0" style="list-style: none;margin: 0;padding: 0;">
                         <li class="py-2">
-                <h4><span class="badge" style="float: right;">20</span> <a href="/html/date/2024-07/" title="2024-07 归档">2024-07</a></h4>
+                <h4><span class="badge" style="float: right;">26</span> <a href="/html/date/2024-07/" title="2024-07 归档">2024-07</a></h4>
             </li>
                         <li class="py-2">
                 <h4><span class="badge" style="float: right;">60</span> <a href="/html/date/2024-06/" title="2024-06 归档">2024-06</a></h4>
